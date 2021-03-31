@@ -45,11 +45,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1603270247,
-        "narHash": "sha256-Uc6oe8G7wSTNqZcpjHpY9qHc8cdU2n9e4GYVR9bgC28=",
+        "lastModified": 1617207297,
+        "narHash": "sha256-zQNXOrDk1V7cMhvygeBpix0Mwm2xC2Zsr33PWQYuCq8=",
         "owner": "tinybeachthor",
         "repo": "nur-packages",
-        "rev": "a7b87a296f5bb5f2a23d421e124a6ff32e0f32a7",
+        "rev": "37ab3a1aecd9fa3a6f033d9c34bd1b2538e84f5d",
         "type": "github"
       },
       "original": {

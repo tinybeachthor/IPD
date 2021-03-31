@@ -6,7 +6,7 @@ mkShell {
   buildInputs = [
     git
 
-    netlogo
+    tinybeachthor.netlogo
   ];
   shellHook = ''
   '';
