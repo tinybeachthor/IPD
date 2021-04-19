@@ -1,1 +1,10 @@
 .direnv
+
+*.pdf
+
+*.fls
+*.lod
+*.log
+*.aux
+*.synctex.gz
+*.fdb_latexmk

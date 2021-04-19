@@ -6,6 +6,8 @@ mkShell {
   buildInputs = [
     git
 
+    texlive.combined.scheme-full
+
     tinybeachthor.netlogo
   ];
   shellHook = ''
