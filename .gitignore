@@ -8,3 +8,5 @@
 *.aux
 *.synctex.gz
 *.fdb_latexmk
+*.bbl
+*.blg

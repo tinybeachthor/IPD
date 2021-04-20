@@ -5,7 +5,14 @@
 \usepackage{geometry}
 \geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
 
+% newlines instead of indent for paragraphs
 \usepackage[parfill]{parskip}
+
+%Import the natbib package and sets a bibliography and citation styles
+\usepackage[numbers,sort]{natbib}
+\bibliographystyle{apalike}
+
+\newcommand{\citationneeded}{\textsuperscript{\color{blue} [citation needed]}}
 
 \usepackage{easy-todo}
 
@@ -54,11 +61,12 @@
 
 \section*{Background of the research}
 When is cooperation the better choice? And when should we choose to rather defect?
-In 1950, Albert Tucker named a particular exchange game "The Prisoner’s dilemma".\cite{encyclopedia} This game captures the inherent difficulty of the choice between cooperation and defection in a single yes/no question.
+In 1950, Albert Tucker named a particular two-player exchange game "The Prisoner’s dilemma" \citep{sep-prisoner-dilemma}.
+This game captures the inherent difficulty of the choice between cooperation and defection in a single yes/no question.
 More complexity arises when the game is extended to its iterated version: allowing agents to interact multiple times. If the number of games to be played if unknown to the agents, they are forced to cooperate to achieve the maximal payoff.
 
 This led to an interesting academic model which could be used to investigate behaviours of many systems.
-To better match nature, the iterated version was further extended by Smaldino et al.\cite{smaldino} by creating a 2D environment for agents to move around. The are slowly expending energy and have to maximize their payoff to survive; best performing agents are allowed to reproduce. Eventually, an equilibrium is achieved.
+To better match nature, the iterated version was further extended by \citet{smaldino} by creating a 2D environment for agents to move around. The are slowly expending energy and have to maximize their payoff to survive; best performing agents are allowed to reproduce. Eventually, an equilibrium is achieved.
 
 Many different aspects of this Spatial Iterated Prisoner’s Dilemma (SIPD), were studied before. \todo{add more examples (+ cite) of past research here - noise, R-D, pattern formation, ...}
 
@@ -152,10 +160,7 @@ Identify the aspects which would be interesting to measure.
 
 
 
-\begin{thebibliography}{9}
-  \bibitem{encyclopedia} Kuhn, Steven, "Prisoner’s Dilemma", The Stanford Encyclopedia of Philosophy (Winter 2019 Edition), Edward N. Zalta (ed.). https://plato.stanford.edu/archives/win2019/entries/prisoner-dilemma/
-  \bibitem{smaldino} Smaldino, P. E., Schank, J. C., and McElreath, R. (2013). Increased costs of cooperation help cooperators in the long run. The American naturalist, 181(4), 451–463. https://doi.org/10.1086/669615
-\end{thebibliography}
+\bibliography{references}
 
 \listoftodos
 
