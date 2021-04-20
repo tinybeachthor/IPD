@@ -1,0 +1,214 @@
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
+
+\usepackage[parfill]{parskip}
+
+\usepackage{easy-todo}
+
+\makeatletter
+\usepackage{url}
+
+\makeatother
+\usepackage{babel}
+
+
+
+\title{Research Plan for New Generation Iterative Prisoner's Dilemma}
+\author{Martin Toman}
+\date{19 April 2021}
+
+\newcommand{\namelistlabel}[1]{\mbox{#1}\hfil}
+\newenvironment{namelist}[1]{%1
+\begin{list}{}{
+  \let\makelabel\namelistlabel
+  \settowidth{\labelwidth}{#1}
+  \setlength{\leftmargin}{1.1\labelwidth}
+}}{%1
+\end{list}}
+
+
+
+\begin{document}
+
+\listoftodos
+
+\maketitle
+\begin{namelist}{}
+\item[{\bf Title:}]
+  \todo{figure out a title for the paper}
+\item[{\bf Author:}]
+  Martin Toman
+\item[{\bf Responsible Faculty:}]
+  Dr. Neil Yorke-Smith
+% \item[{\bf (Required for final version) Examiner:}]
+% 	Another Professor (\emph{interested, but not involved})
+\item[{\bf Peer group members:}]
+  Roberta Gismondi,
+  Per Knops,
+  Raymond Timmermans,
+  Tommaso Tofacchi
+\end{namelist}
+
+
+
+\section*{Background of the research}
+When is cooperation the better choice? And when should we choose to rather defect?
+In 1950, Albert Tucker named a particular exchange game "The Prisoner’s dilemma".\cite{encyclopedia} This game captures the inherent difficulty of the choice between cooperation and defection in a single yes/no question.
+More complexity arises when the game is extended to its iterated version: allowing agents to interact multiple times. If the number of games to be played if unknown to the agents, they are forced to cooperate to achieve the maximal payoff.
+
+This led to an interesting academic model which could be used to investigate behaviours of many systems.
+To better match nature, the iterated version was further extended by Smaldino et al.\cite{smaldino} by creating a 2D environment for agents to move around. The are slowly expending energy and have to maximize their payoff to survive; best performing agents are allowed to reproduce. Eventually, an equilibrium is achieved.
+
+Many different aspects of this Spatial Iterated Prisoner’s Dilemma (SIPD), were studied before. \todo{add more examples (+ cite) of past research here - noise, R-D, pattern formation, ...}
+
+\todo{mention the counterintuitive results of the continuous game - double check this}
+
+However there are still many aspects of this game, which could be visited or given more scrutiny.
+By allowing the agents of a SIPD to communicate we can open up many more opportunities for more complex behaviour to emerge.
+This could also be a good environment for evaluating various gossip or consensus protocols. \todo{introduce this better + cite (scuttlebutt, raft, paxos?, ...) maybe?}
+And by stressing the environment with noise, harsh conditions, malicious agents, or limiting the transfer rate, we can throughly evaluate the behaviour of these algorithms in extreme conditions.
+
+
+
+\section*{Research Question}
+% Now state explicitly the main question you aim to answer or the hypothesis you aim to
+% test.
+% Argue why this is a reasonable hypothesis to test.
+% Make references to the items listed in the reference section
+% that back up your arguments.
+% Explain what you expect will be accomplished by undertaking this
+% particular project.
+
+% Break down the main question(s) into sub-questions that enable you to tackle your research in a more step-by-step manner.
+% Aim to formulate (sub-)questions that are sufficiently concrete, such that other students would be able to answer them with a single experiment or proof, and that you would be able to judge whether they have done well. E.g.\ it is better to say: "under which conditions (e.g.\ problem size) is method A better than method B?" than "How can you do better than method B?". Include objective criteria for success. E.g.\ ``lower runtime than algorithm A'', ``better quality than method B'' or ``using fewer data samples than C'', etc. Try to envision how you would present the ideal outcome. E.g.\ a plot with the criterium on the $y$-axis.
+
+What can we learn from Spatial Prisoner’s Dilemma by allowing agents to communicate?
+
+Interesting aspects of SPD with communication:
+\begin{enumerate}
+\item Limiting the rate and representation of information
+\item Combinations of strategies for behaviour and communication
+\item Using gossip (or consensus) protocols for dissemination of information
+\item Add a secondary game for trading information \todo{is this basically donation game?}
+\end{enumerate}
+\todo{Pick a concrete focus - discuss with responsible}
+
+
+
+\section*{Method}
+% In this section you should outline how you intend to go
+% about accomplishing the aims you have set in the previous
+% section. Try to break your aims down into small, achievable tasks.
+% Which tools/software/data are you going to use? With whom do you intend to collaborate on what (if anyone)? What are their tasks? What are your tasks?
+% Identify dependencies between these tasks.
+
+Implement the SPD: netlogo / custom implementation?
+Check the speed of netlogo. Can simulate milions of steps?
+Is it possible to expose the netlogo model over network? (Would be nice to allow interactive presentation of the research - distill-style)
+
+Identify the aspects which would be interesting to measure.
+\begin{enumerate}
+\item convergence to cooperation (rate/time)
+\item for the algorithms: the most extreme conditions tolerable
+\item for trading information: price/value
+\item ...
+\end{enumerate}
+
+
+
+\section*{Planning of the research project}
+% Try to estimate how long you will spend on each task, and draw up a timetable for each sub-task.
+% Include the set deadline moments (midterm presentation, paper draft v1 for peer review, paper draft v2 for supervisor feedback, etc.) from the manual. Also include time for writing and don't postpone this to the latest moment (e.g.\ 1 page per day is pretty normal).
+% Please include a timeline with the important dates, i.e., at least including the following:
+% \begin{enumerate}
+% \item milestones for completion of the identified (sub)tasks
+% \item all meetings with interaction with your peer group
+% \item all meetings with your supervisor (these may overlap with the above) -- think about what you'd like to discuss
+% \item all meetings with your responsible professor (these may overlap with the above)  -- think about what you'd like to discuss
+% \item deadlines according to the manual
+% \item final conference day / presentation / meeting with examiner
+% \end{enumerate}
+
+\subsection*{Week 0}
+
+\begin{enumerate}
+\item Read preliminary research provided by the responsible professor
+\item Read last year's student papers
+\item Find more relevant papers
+\item Think about interesting relevant research
+\end{enumerate}
+
+\subsection*{Week 1 - April 25}
+\begin{enumerate}
+\item \textbf{(April 19 10:45)}: Kick-off meeting
+\item \textbf{Deadline (April 19)}: planning week 1
+\item \textbf{Deadline (April 20)}: information literacy 2
+\item Setup \LaTeX + netlogo/other \todo{check if netlogo would work} environment
+\item Decide on a research question + narrow down the scope/focus of the paper.
+\item Try to find some "PD with communication" papers
+\item Find more relevant research: investigate the state of the art
+\item \textbf{Deadline (April 25)}: research plan
+\end{enumerate}
+
+\subsection*{Week 2 - May 2}
+\begin{enumerate}
+\item \textbf{Deadline (May 2)}: research plan presentation
+\end{enumerate}
+
+\subsection*{Week 3 - May 9}
+% \begin{enumerate}
+% \end{enumerate}
+
+\subsection*{Week 4 - May 16}
+\begin{enumerate}
+\item \textbf{(May 10 10:45)}: responsible research session
+\end{enumerate}
+
+\subsection*{Week 5 - May 23}
+\begin{enumerate}
+\item \textbf{Deadline (May 19)}: midterm poster
+\end{enumerate}
+
+\subsection*{Week 6 - May 30}
+% \begin{enumerate}
+% \end{enumerate}
+
+\subsection*{Week 7 - June 6}
+% \begin{enumerate}
+% \end{enumerate}
+
+\subsection*{Week 8 - June 13}
+\begin{enumerate}
+\item \textbf{Deadline (June 7)}: paper draft v1
+\item \textbf{Deadline (June 10)}: peer review
+\end{enumerate}
+
+\subsection*{Week 9 - June 20}
+\begin{enumerate}
+\item \textbf{Deadline (June 16)}: paper draft v2
+\end{enumerate}
+
+\subsection*{Week 10 - June 27}
+\begin{enumerate}
+\item \textbf{Deadline (June 27)}: final paper
+\end{enumerate}
+
+\subsection*{Week 11 - July 4}
+\begin{enumerate}
+\item \textbf{Deadline (June 29)}: final poster
+\item Poster presentation
+\end{enumerate}
+
+
+
+
+\begin{thebibliography}{9}
+  \bibitem{encyclopedia} Kuhn, Steven, "Prisoner’s Dilemma", The Stanford Encyclopedia of Philosophy (Winter 2019 Edition), Edward N. Zalta (ed.). https://plato.stanford.edu/archives/win2019/entries/prisoner-dilemma/
+  \bibitem{smaldino} Smaldino, P. E., Schank, J. C., and McElreath, R. (2013). Increased costs of cooperation help cooperators in the long run. The American naturalist, 181(4), 451–463. https://doi.org/10.1086/669615
+\end{thebibliography}
+
+\end{document}
