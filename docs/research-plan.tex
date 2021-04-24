@@ -14,6 +14,9 @@
 
 \newcommand{\citationneeded}{\textsuperscript{\color{blue} [citation needed]}}
 
+% tables
+\usepackage{multirow}
+
 \usepackage{easy-todo}
 
 \makeatletter
@@ -46,7 +49,7 @@
 \maketitle
 \begin{namelist}{}
 \item[{\bf Title:}]
-  Keep your enemies closer, and be loud about it
+  Keep your enemies closer and be loud about it
 \item[{\bf Author:}]
   Martin Toman
 \item[{\bf Responsible Faculty:}]
@@ -68,24 +71,26 @@ To study the conditions necessary for cooperation to flourish we will need a sui
 
 In 1950, Albert Tucker named a particular two-player exchange game "The Prisoner's dilemma" \citep{sep-prisoner-dilemma}.
 This game elegantly captures the difficulty of the decision between cooperation and defection in a single choice.
-Despite being so simple compared to the complexity of the problem it is representing, it was used to model many different aspects of behaviour in systems of selfish individuals; and shown that cooperation is the optimal strategy in a wide variety of conditions.
+Despite being so simple compared to the complexity of the problem it is representing, it was used to model many aspects of behaviour in systems of selfish individuals; and, as formulate by \citet{Axelrod84}, for "discovery of the precise conditions that are necessary and sufficient for cooperation to emerge".
 
 % iterated version + the dilemma
-In the case of a one-off exchange, when there is no opportunity for the opponent to punish us, the rational behaviour is defection. (This extends inductively to all rounds of a fixed-length game.)
-The truly interesting behaviour arises when there is no end; or, at least, if there is no way for the participants of the game to know when or even if there is an end.
+In the case of a one-off exchange, when there is no opportunity for the opponent to punish us, the rational behaviour is defection. (This extends to all rounds for a fixed-length game, inductively \citep{Axelrod84}.)
+The truly interesting behaviour arises if there is no end; or, at least, if there is no way for the participants of the game to know when or even if there is an end.
 % reputation importance
-One has to expect that even a single defection can be infinitely punished by never again cooperating with the culprit \citationneeded{GRIM}.
+One has to expect that even a single defection can be infinitely punished by never again cooperating with the culprit \citep{GRIM}.
 Such a risk may just not be worth it.
 
 % global reputation system
-Defection can, of course, only be punished if the culprit can be identified and known to others. This is why services like Ebay or Airbnb have a rating system in place.
+The defectors can, naturally, only be punished if they can be identified and known to others. This is why services like Ebay or Airbnb have a rating system in place.
 Presence of a reputation system has been shown to strongly boost cooperation, as shown by \citet{simple-reputation} and \citet{public-private-monitoring}.
-These studies used groups of volunteers as game participants and explored the effects of various information being public - from only the latest action of current opponent, to full histories of everyone.
+These studies used groups of volunteers as game participants and explored the effects of various information being public - varying from only the latest action of current opponent, to full histories of everyone.
 
 % decentralizing reputation: keeping track internally?
-Some limitations of these studies were the fact that they used humans as game participants and were thus limited to relatively small groups with relatively few rounds; they also used external infrastructure for information passing: eliminating noise, delays, and deliberately wrong information.
-Using external infrastructure for passing information also meant that the transmission speed was uniform with all participants receiving all necessary information in time for their next round of the game.
-These are non-negligible idealizations. Their relaxation would yield a model closer to real-world systems and could change the results drastically.
+Some limitations of these studies were the fact that they used humans as game participants and were thus limited to relatively small groups with relatively few rounds; they also used external infrastructure for information passing: therefore eliminating noise, delays, and deliberately wrong information.
+As shown by \citet{noise}, not all strategies that perform well in noise-less environments can do so under the presence of noise.
+
+Using external infrastructure for passing information also meant that the transmission speed was uniform for all participants receiving all necessary information in time for their next round of the game.
+These are non-negligible idealizations; relaxing them would yield a model closer to real-world systems and could change the results drastically.
 There is no way to tell without testing it out.
 
 
@@ -93,22 +98,24 @@ There is no way to tell without testing it out.
 \section*{Research Question}
 % Now state explicitly the main question you aim to answer or the hypothesis you aim to test.
 % Argue why this is a reasonable hypothesis to test.
-% Make references to the items listed in the reference section that back up your arguments.
 Can we sustain cooperation with only local reputation?
-Presence of a global reputation system fosters cooperation well, but has problems of its own and as a centralized system is vulnerable to censorship and malfunction can be very costly.
+% Make references to the items listed in the reference section that back up your arguments.
+Presence of a global reputation system fosters cooperation well, but has problems of its own and as a centralized system is vulnerable to censorship and malfunctions can be very costly.
 % Explain what you expect will be accomplished by undertaking this particular project.
-By decentralizing the reputation system, we can leverage the participants themselves to create conditions ideal for cooperation while avoiding many shortcoming of the centralized system. \citationneeded{decentralized advantages}
+By decentralizing the reputation system, we can leverage the participants themselves to create conditions ideal for cooperation while avoiding many shortcoming of the centralized system.
+\todo{bittorent prisoner's dilemma model \citationneeded}
 
 % Break down the main question(s) into sub-questions that enable you to tackle your research in a more step-by-step manner.
 % Aim to formulate (sub-)questions that are sufficiently concrete, such that other students would be able to answer them with a single experiment or proof, and that you would be able to judge whether they have done well.
 % E.g.\ it is better to say: "under which conditions (e.g.\ problem size) is method A better than method B?" than "How can you do better than method B?". Include objective criteria for success. E.g.\ ``lower runtime than algorithm A'', ``better quality than method B'' or ``using fewer data samples than C'', etc. Try to envision how you would present the ideal outcome. E.g.\ a plot with the criterium on the $y$-axis.
-Can we sustain cooperation with only local reputation?
+To answer to the main question, we outline the following sub-questions to serve as an outline for leading us to the full answer; while exploring interesting interactions along the way.
 \begin{enumerate}
   \item Can we replicate the design and results of \citet{smaldino}?
-  \item How can we extend the model with variable-length memory and what strategies can we define on this new model?
+  \item How can we extend the model with variable-length memory and what strategies can we define on this new model? What are the effects of shorter/longer memory and is there an optimal length for memory beyond which there is no benefit?
   \item What is the best way to combine own observations and gossip from peers? We want to combine the data in such a way that we keep information about participants we are most likely to interact with in the next round.
-  \item Does freely gossiping with other participants boost cooperation, when compared to no-gossip run?
-  \item What is the difference between gossip-then-play, and play-then-gossip models? Does it make a difference if we gossip ex-ante or ex-post?
+  \item Does openly gossiping with other participants boost cooperation, when compared to a no-gossip scenario?
+  \item At what shouting distance is the gossiping most effective? Is it enough to exchange information with other participants on contact (i.e. on the same distance that a round can be played)?
+  \item What is the difference between gossip-then-play, and play-then-gossip models? Does it make a difference if we gossip before or after playing the round?
   \item Can we maintain this cooperation level by only gossiping compressed categorical data? (e.g. "hostile"/"neutral"/"friendly" instead of "defected in 82\% of rounds when unprovoked") So as to model the way natural language works and how local context skews the absolute meaning of words: "hostile" for one participant could be "friendly" for another.
 \end{enumerate}
 
@@ -116,8 +123,39 @@ Can we sustain cooperation with only local reputation?
 
 \section*{Method}
 % In this section you should outline how you intend to go about accomplishing the aims you have set in the previous section.
-\todo{describe method}
+To explore the effects of local reputation, built via openly gossiping with local peers, we are gonna use a computer simulation of a multi-agent spatial environment; we will base it on the design of Spatial Iterated Prisoner’s Dilemma, as defined by \citet{smaldino}.
+A single round of the game is defined using a payoff matrix as shown in Table \ref{table:payoff}, with $T > R > P > S$ and $2R > T + S$ \citationneeded.
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{c c||c|c}
+    & & \multicolumn{2}{c}{Opponent's move} \\
+    & & Cooperate & Defect \\
+    \hline\hline
+
+    \multirow{4}{6em}{Player's move}
+    & \multirow{2}{5em}{Cooperate}
+      & Player:\ \ \ \ \ \ R & Player:\ \ \ \ \ \ S \\
+    & & Opponent: R & Opponent: T \\
+    \cline{2-4}
+    & \multirow{2}{5em}{Defect}
+      & Player:\ \ \ \ \ \ T & Player:\ \ \ \ \ \ P \\
+    & & Opponent: S & Opponent: P \\
+  \end{tabular}
+
+  \caption{Payoff matrix}
+  \label{table:payoff}
+\end{table}
+
+\todo{environment characteristics}
+
+\todo{what will be observed}
+
 % Try to break your aims down into small, achievable tasks.
+To achieve the goal of this paper, we define the following subtasks which have to completed:
+\begin{enumerate}
+  \item Reimplement the design of \citet{smaldino}.
+\end{enumerate}
 \todo{define subtasks}
 
 % Which tools/software/data are you going to use? With whom do you intend to collaborate on what (if anyone)? What are their tasks? What are your tasks?
@@ -131,96 +169,120 @@ Can we sustain cooperation with only local reputation?
 % Try to estimate how long you will spend on each task, and draw up a timetable for each sub-task.
 \todo{estimate time for subtasks}
 
-% Please include a timeline with the important dates, i.e., at least including the following:
-% \begin{enumerate}
 % \item milestones for completion of the identified (sub)tasks
-% \item all meetings with your supervisor (these may overlap with the above) -- think about what you'd like to discuss
-% \end{enumerate}
-\todo{add time for writing (or deadlines for sections) to schedule}
 
 \subsection*{Week 0}
-
 \begin{enumerate}
 \item Read preliminary research provided by the responsible professor
-\item Read last year's student papers
-\item Find more relevant papers
-\item Think about interesting relevant research
+\item Explore foundational papers (\citep{smaldino}, \citationneeded{axelrod})
+\item Read last year's student-papers on this topic
+\item Research recent papers and new research directions
+\item Formulate possible research questions
 \end{enumerate}
 
 \subsection*{Week 1 - April 25}
 \begin{enumerate}
 \item \textbf{(April 19 10:45)}: Kick-off meeting
 \item \textbf{Deadline (April 19)}: planning week 1
-\item \textbf{(April 20 17:00)}: peer group + responsible professor meeting
+\item \textbf{(April 20 17:00)}: Meeting: peer group + responsible professor
 \item \textbf{Deadline (April 20)}: information literacy 2
-\item Setup \LaTeX + netlogo/other \todo{check if netlogo would work} environment
-\item Try to find some "PD with communication" papers
-\item Decide on a research question + narrow down the scope/focus of the paper.
+\item Setup \LaTeX
+\item Explore interesting "PD with communication" papers
+\item Decide on a research question + narrow down the scope of the paper.
 \item Find more relevant research: investigate the state of the art
 \item \textbf{Deadline (April 25)}: research plan
 \end{enumerate}
 
 \subsection*{Week 2 - May 2}
 \begin{enumerate}
-\item \textbf{(April 27 16:00)}: peer group + responsible professor meeting
+\item \textbf{(April 27 16:00)}: Meeting: peer group + responsible professor
+\item Setup Python development environment
+\item Replicate \citet{smaldino}
+\item Compare results of the reimplemented model with the original
+\item Study papers concerning reputation systems in the context of PD (\citet{simple-reputation}, \citet{public-private-monitoring}, ...)
+\item Prepare research plan presentation
 \item \textbf{Deadline (May 2)}: research plan presentation
 \end{enumerate}
 
 \subsection*{Week 3 - May 9}
 \begin{enumerate}
-\item peer group + responsible professor meeting
+\item Add memory to the SPD model
+\item Meeting: peer group + responsible professor
+\item Explore \& implement interesting strategies making use of memory \citationneeded
+\item Compare results of the model with memory with the original
+\item Formulate a communication model to be used for gossip, how can we combine data so as to keep info on the most likely peers to interact with in the future rounds. \citationneeded{LRU}
+\item Write background + model design sections of the final paper
 \end{enumerate}
 
 \subsection*{Week 4 - May 16}
 \begin{enumerate}
 \item \textbf{(May 10 10:45)}: responsible research session
-\item peer group + responsible professor meeting
+\item Meeting: peer group + responsible professor
+\item Test a self-learning model instead of a fixed strategy
+\item Compare gossip-then-play with play-then-gossip models and see if this affects results
 \end{enumerate}
 
 \subsection*{Week 5 - May 23}
 \begin{enumerate}
-\item peer group + responsible professor meeting
+\item Meeting: peer group + responsible professor
+\item Write method sections of the final paper
+\item Document preliminary results in the paper
+\item Prepare midterm poster for presentation of progress
 \item \textbf{Deadline (May 19)}: midterm poster
 \end{enumerate}
 
 \subsection*{Week 6 - May 30}
 \begin{enumerate}
-\item peer group + responsible professor meeting
+\item Meeting: peer group + responsible professor
+\item Implement communication compression
+\item Rerun experiments with communication compression and compare results
+\item Test out communication compression effects on the cooperation levels
+\item Find the optimal levels of compression, which are able to sustain cooperation
 \end{enumerate}
 
 \subsection*{Week 7 - June 6}
 \begin{enumerate}
-\item peer group + responsible professor meeting
+\item Meeting: peer group + responsible professor
+\item Format diagrams \& plots for the final paper
+\item Write results sections \& conclusion of the paper
 \end{enumerate}
 
 \subsection*{Week 8 - June 13}
 \begin{enumerate}
-\item peer group + responsible professor meeting
+\item Meeting: peer group + responsible professor
+\item Write abstract \& finalize paper
 \item \textbf{Deadline (June 7)}: paper draft v1
 \item \textbf{Deadline (June 10)}: peer review
 \end{enumerate}
 
 \subsection*{Week 9 - June 20}
 \begin{enumerate}
-\item peer group + responsible professor meeting
+\item Meeting: peer group + responsible professor
+\item Fix issues with paper \& incorporate feedback
+\item Create a jupyter notebook for the model \& make it available online
 \item \textbf{Deadline (June 16)}: paper draft v2
 \end{enumerate}
 
 \subsection*{Week 10 - June 27}
 \begin{enumerate}
-\item peer group + responsible professor meeting
+\item Meeting: peer group + responsible professor
+\item Incorporate feedback in the paper
+\item Outline future work in the paper and add this to the end of the paper
+\item Polish the final version of the paper
+\item Prepare final poster
 \item \textbf{Deadline (June 27)}: final paper
 \end{enumerate}
 
 \subsection*{Week 11 - July 4}
 \begin{enumerate}
-\item peer group + responsible professor meeting
+\item Meeting: peer group + responsible professor
 \item \textbf{Deadline (June 29)}: final poster
 \item Poster presentation
 \end{enumerate}
 
 
 
+\pagebreak
 \bibliography{references}
 
 \end{document}
