@@ -12,10 +12,12 @@
 % import natbib and sets bibliography and citation styles
 \usepackage[numbers,sort]{natbib}
 \bibliographystyle{apalike}
-\newcommand{\citationneeded}{\textsuperscript{\color{blue} [citation needed]}}
 
 \usepackage{hyperref}
-\usepackage{easy-todo}
+
+% work in progress packages
+% \newcommand{\citationneeded}{\textsuperscript{\color{blue} [citation needed]}}
+% \usepackage{easy-todo}
 
 
 
@@ -36,7 +38,7 @@
 
 \begin{document}
 
-\listoftodos
+% \listoftodos
 
 \maketitle
 \begin{namelist}{}
@@ -56,7 +58,11 @@
 
 
 \section*{Abstract}
-\todo{write abstract}
+Under what conditions is cooperation the optimal strategy?
+To answer this question a two-player exchange game was defined: The Prisoner’s Dilemma.
+However, to sustain cooperation over a long period an external mechanism is required.
+It was shown that keeping track of the reputation of all participants (e.g. Ebay's seller rating) can greatly boost levels of cooperation in the population.
+We propose a new research into the effects of reputation in a Spatial version of the game using only local interactions to observe and exchange the reputation information. This design more closely fits decentralized systems and a similar model has already been used to improve peer-to-peer protocols.
 
 
 
@@ -66,12 +72,12 @@
 How can we encourage and sustain cooperation? Humans dominate their environments thanks to our ability to cooperate flexibly and at scale, as argued by \citet{harari-sapiens}.
 To study the conditions necessary for cooperation to flourish we will need a suitable model of an activity with temptations to defect and punishment for doing so.
 
-In 1950, Albert Tucker named a particular two-player exchange game "The Prisoner's dilemma" \citep{sep-prisoner-dilemma}.
+In 1950, Albert Tucker named a particular two-player exchange game "The Prisoner's Dilemma" \citep{sep-prisoner-dilemma}.
 This game elegantly captures the difficulty of the decision between cooperation and defection in a single choice.
 Despite being so simple compared to the complexity of the problem it is representing, it was used to model many aspects of behaviour in systems of selfish individuals; and, as formulate by \citet{Axelrod84}, for "discovery of the precise conditions that are necessary and sufficient for cooperation to emerge".
 
 % iterated version + the dilemma
-In the case of a one-off exchange, when there is no opportunity for the opponent to punish us, the rational behaviour is defection. (This extends to all rounds for a fixed-length game, inductively \citep{Axelrod84}.)
+In the case of a one-off exchange, there being no opportunity for a follow-up punishment, the rational behaviour is defection. (This extends to all rounds for a fixed-length game, inductively \citep{Axelrod84}.)
 The truly interesting behaviour arises if there is no end; or, at least, if there is no way for the participants of the game to know when or even if there is an end.
 % reputation importance
 One has to expect that even a single defection can be infinitely punished by never again cooperating with the culprit \citep{GRIM}.
@@ -80,10 +86,10 @@ Such a risk may just not be worth it.
 % global reputation system
 The defectors can, naturally, only be punished if they can be identified and known to others. This is why services like Ebay or Airbnb have a rating system in place.
 Presence of a reputation system has been shown to strongly boost cooperation, as shown by \citet{simple-reputation} and \citet{public-private-monitoring}.
-These studies used groups of volunteers as game participants and explored the effects of various information being public - varying from only the latest action of current opponent, to full histories of everyone.
+These studies used groups of volunteers as game participants and explored the effects of various information being public - varying from only the latest move of the current opponent, to full histories of all moves taken by every participant.
 
 % decentralizing reputation: keeping track internally?
-Some limitations of these studies were the fact that they used humans as game participants and were thus limited to relatively small groups with relatively few rounds; they also used external infrastructure for information passing: therefore eliminating noise, delays, and deliberately wrong information.
+Some limitations of these studies were the fact that they used humans as game participants and were thus limited to relatively small groups with few rounds; they also used external infrastructure for information passing: therefore eliminating noise, delays, and deliberately wrong information.
 As shown by \citet{noise}, not all strategies that perform well in noise-less environments can do so under the presence of noise.
 
 Using external infrastructure for passing information also meant that the transmission speed was uniform for all participants receiving all necessary information in time for their next round of the game.
@@ -96,19 +102,19 @@ There is no way to tell without testing it out.
 % Now state explicitly the main question you aim to answer or the hypothesis you aim to test.
 % Argue why this is a reasonable hypothesis to test.
 % Make references to the items listed in the reference section that back up your arguments.
-Can we sustain cooperation with only local reputation?
-Presence of a global reputation system fosters cooperation well, but has problems of its own and as a centralized system is vulnerable to censorship and malfunctions can be very costly.
+Can we sustain cooperation with only locally determined reputation?
+Presence of a global reputation "improves the frequency of cooperators in the population" \citep{dong-reputation}, but has problems of its own and as a centralized system is vulnerable to censorship and malfunctions can be very costly.
 % Explain what you expect will be accomplished by undertaking this particular project.
 By decentralizing the reputation system, we can leverage the participants themselves to create conditions ideal for cooperation while avoiding many shortcoming of the centralized system.
 This is interesting in the context of peer-to-peer systems, where a centralized system is not a tenable solution as it would counteract most of the benefits of a peer-to-peer solution.
-\citet{bittorrent-ipd} used an Iterated Prisoner’s Dilemma to investigate the incentive mechanism in BitTorrent \citep{bittorrent}, a peer-to-peer file distribution protocol.
+\citet{bittorrent-ipd} have successfully used an Iterated Prisoner’s Dilemma model to investigate the incentive mechanism in BitTorrent \citep{bittorrent}, a peer-to-peer file distribution protocol.
 
 % Break down the main question(s) into sub-questions that enable you to tackle your research in a more step-by-step manner.
 % Aim to formulate (sub-)questions that are sufficiently concrete, such that other students would be able to answer them with a single experiment or proof, and that you would be able to judge whether they have done well.
 To answer the research question, we present the following sub-questions to serve as an outline for leading us to the final answer; all while exploring interesting interactions along the way.
 \begin{enumerate}
   \item Can we replicate the design and results of \citet{smaldino}?
-  \item How can we extend the model with variable-length memory and what strategies can we define on this new model? What are the effects of shorter/longer memory and is there an optimal length for memory beyond which there is no benefit?
+  \item How can we extend the model with variable-length memory and what strategies can we define on this new model? What are the effects of shorter/longer memory and what is the optimal length?
   \item What is the best way to combine own observations and gossip from peers? We want to combine the data in such a way that we keep information about participants we are most likely to interact with in the next round.
   \item Does openly gossiping with other participants boost cooperation, when compared to a no-gossip scenario?
   \item At what range is the gossiping most effective? Is it enough to exchange information with other participants on contact (i.e. on the same distance that a round can be played)?
@@ -120,8 +126,8 @@ To answer the research question, we present the following sub-questions to serve
 
 \section*{Method}
 % In this section you should outline how you intend to go about accomplishing the aims you have set in the previous section.
-To explore the effects of local reputation, built via openly gossiping with local peers, we are gonna use a computer simulation of a multi-agent spatial environment; we will base it on the design of Spatial Iterated Prisoner’s Dilemma, as defined by \citet{smaldino}.
-A single round of the game is defined using a payoff matrix as shown in Table \ref{table:payoff}, with $T > R > P > S$ and $2R > T + S$ \citationneeded.
+To explore the effects of local reputation, built via openly gossiping with local peers, we are gonna use a computer simulation of a multi-agent spatial environment; we will base it on the design of Spatial Iterated Prisoner’s Dilemma, as used by \citet{smaldino}.
+A single round of the game is defined using a payoff matrix as shown in Table \ref{table:payoff}, with $T > R > P > S$ and $2R > T + S$ \citep{chammah1965}.
 
 \begin{table}[h!]
   \centering
@@ -144,10 +150,10 @@ A single round of the game is defined using a payoff matrix as shown in Table \r
   \label{table:payoff}
 \end{table}
 
-Participants are agents living in a 2D grid, accumulating energy via repeatably engaging in rounds of PD as defined above. Agents are moving synchronously with their their order being randomly determined at every clock tick. They need energy to survive to next round, which is subtracted from all peers at the end of each turn (and agents who deplete their energy die).
+Participants are agents living in a 2D grid, accumulating energy via repeatably engaging in rounds of PD as defined above. Agents are moving at the same speed, and their order in which they take their turn is randomly determined at every clock tick. They pay a fixed cost to survive to a next round, which is subtracted from all peers at the end of each turn (agents who deplete their energy die and are removed from the simulation).
 Another use of the energy is to constrain reproduction and allow only the most successful agents to reproduce, producing an offspring with an identical strategy.
 
-We will expand the model with (limited) memory for the agents of past actions of other participants and later allowing them to actively and freely share this knowledge by gossiping at various range.
+We will expand the model by giving the agents a (limited) memory to keep track of past actions of other participants and later allow them to actively and freely share this knowledge by gossiping at various range.
 
 To determine the effectives of gossiping in inducing cooperation, we will observe the rate of convergence to a population of cooperators, stopping the game once stable equilibrium is achieved. We will use the no-gossip model as a benchmark and compare various range at which gossiping is possible to determine the optimal amount of information transmitted necessary for cooperation to win in the population.
 After that we will compress the gossip into only labels ("hostile"/"neutral"/"friendly") determined by agents based on their local observations.
@@ -173,7 +179,7 @@ To achieve the goal of this paper, we define the following subtasks which have t
     \timeest{10}
   \item \label{subtasks:gossip}
     Expand the model with gossip at range
-    \timeest{10}
+    \timeest{20}
   \item \label{subtasks:gossip-experiments}
     Run experiments with varying gossip range (determine optimal range)
     \timeest{10}
@@ -184,10 +190,10 @@ To achieve the goal of this paper, we define the following subtasks which have t
     Run experiments to determine the effects of the compression
     \timeest{15}
 \end{enumerate}
-\textit{(Note: the time estimated are conservative, but optimistic, approximations.)}
+\textit{(Note: the time estimated are conservative but optimistic approximations.)}
 
 % Identify dependencies between these tasks.
-Each of these subtasks is dependant on the successful and total completion of all the previous ones. All of them have to completed sequentially in the order as defined here.
+Each of these subtasks is dependant on the successful and total completion of all the previous ones. All of them have to completed sequentially in the order as defined above.
 
 % Which tools/software/data are you going to use? With whom do you intend to collaborate on what (if anyone)? What are their tasks? What are your tasks?
 For the implementation of the spatial agent model, we are planning to use MESA (\url{https://mesa.readthedocs.io/en/master/}), a Python framework for agent-based simulations. This has been chosen over other options, because of the popularity of the Python programming language (especially in the context of Jupyter notebooks); we hope this will make this project more approachable to a wider audience and inspire more experimentation or allow others to easier extend/modify the implementation.
@@ -216,7 +222,7 @@ In this section, a preliminary weekly plan is presented. It is based on the subt
 \item \textbf{Deadline (April 20)}: information literacy 2
 \item Setup \LaTeX
 \item Explore interesting "PD with communication" papers
-\item Decide on a research question + narrow down the scope of the paper.
+\item Decide on a research question \& narrow down the scope of the paper
 \item Find more relevant research: investigate the state of the art
 \item \textbf{Deadline (April 25)}: research plan
 \end{enumerate}
@@ -251,15 +257,16 @@ In this section, a preliminary weekly plan is presented. It is based on the subt
 \begin{enumerate}
 \item \textbf{(May 10 10:45)}: responsible research session
 \item Meeting: peer group + responsible professor
-\item Formulate a communication model to be used for gossip, how can we combine data so as to keep info on the most likely peers to interact with in the future rounds.
+\item Formulate a communication model to be used for gossip at range
+\item How can we combine local with received data so as to keep the most relevant in the memory
   \subtask{gossip}
 \item Test a self-learning model instead of a fixed strategy
-\item Compare gossip-then-play with play-then-gossip models
-  \subtask{gossip-experiments}
 \end{enumerate}
 
 \subsection*{Week 5 - May 23}
 \begin{enumerate}
+\item Compare gossip-then-play with play-then-gossip models
+  \subtask{gossip-experiments}
 \item Meeting: peer group + responsible professor
 \item Write method sections of the final paper
 \item Document preliminary results in the paper
