@@ -1,4 +1,12 @@
-{ pkgs ? import <nixpkgs> { } }:
+{ pkgs ? import <nixpkgs> { }
+, mkPython
+}:
+
+let
+  pyEnv = mkPython {
+    requirements = builtins.readFile ./requirements.txt;
+  };
+in
 
 with pkgs;
 
@@ -8,8 +16,7 @@ mkShell {
 
     texlive.combined.scheme-full
 
+    pyEnv
     tinybeachthor.netlogo
   ];
-  shellHook = ''
-  '';
 }
