@@ -1,29 +1,21 @@
 \documentclass[english]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-
+\usepackage{babel}
 \usepackage{geometry}
 \geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
-
 % newlines instead of indent for paragraphs
 \usepackage[parfill]{parskip}
-
-% import natbib and sets bibliography and citation styles
-\usepackage[numbers]{natbib}
-\bibliographystyle{apalike}
-
-\newcommand{\citationneeded}{\textsuperscript{\color{blue} [citation needed]}}
-
 % tables
 \usepackage{multirow}
 
+% import natbib and sets bibliography and citation styles
+\usepackage[numbers,sort]{natbib}
+\bibliographystyle{apalike}
+\newcommand{\citationneeded}{\textsuperscript{\color{blue} [citation needed]}}
+
+\usepackage{hyperref}
 \usepackage{easy-todo}
-
-\makeatletter
-\usepackage{url}
-
-\makeatother
-\usepackage{babel}
 
 
 
@@ -63,10 +55,15 @@
 
 
 
+\section*{Abstract}
+\todo{write abstract}
+
+
+
 \section*{Background of the research}
 
 % intro - what is prisoner's dilemma
-How can we encourage and sustain cooperation? Humans dominate their environments thanks to our ability to cooperate flexibly and at scale, according to \citet{harari-sapiens}.
+How can we encourage and sustain cooperation? Humans dominate their environments thanks to our ability to cooperate flexibly and at scale, as argued by \citet{harari-sapiens}.
 To study the conditions necessary for cooperation to flourish we will need a suitable model of an activity with temptations to defect and punishment for doing so.
 
 In 1950, Albert Tucker named a particular two-player exchange game "The Prisoner's dilemma" \citep{sep-prisoner-dilemma}.
@@ -98,23 +95,23 @@ There is no way to tell without testing it out.
 \section*{Research Question}
 % Now state explicitly the main question you aim to answer or the hypothesis you aim to test.
 % Argue why this is a reasonable hypothesis to test.
-Can we sustain cooperation with only local reputation?
 % Make references to the items listed in the reference section that back up your arguments.
+Can we sustain cooperation with only local reputation?
 Presence of a global reputation system fosters cooperation well, but has problems of its own and as a centralized system is vulnerable to censorship and malfunctions can be very costly.
 % Explain what you expect will be accomplished by undertaking this particular project.
 By decentralizing the reputation system, we can leverage the participants themselves to create conditions ideal for cooperation while avoiding many shortcoming of the centralized system.
-\todo{bittorent prisoner's dilemma model \citationneeded}
+This is interesting in the context of peer-to-peer systems, where a centralized system is not a tenable solution as it would counteract most of the benefits of a peer-to-peer solution.
+\citet{bittorrent-ipd} used an Iterated Prisoner’s Dilemma to investigate the incentive mechanism in BitTorrent \citep{bittorrent}, a peer-to-peer file distribution protocol.
 
 % Break down the main question(s) into sub-questions that enable you to tackle your research in a more step-by-step manner.
 % Aim to formulate (sub-)questions that are sufficiently concrete, such that other students would be able to answer them with a single experiment or proof, and that you would be able to judge whether they have done well.
-% E.g.\ it is better to say: "under which conditions (e.g.\ problem size) is method A better than method B?" than "How can you do better than method B?". Include objective criteria for success. E.g.\ ``lower runtime than algorithm A'', ``better quality than method B'' or ``using fewer data samples than C'', etc. Try to envision how you would present the ideal outcome. E.g.\ a plot with the criterium on the $y$-axis.
-To answer to the main question, we outline the following sub-questions to serve as an outline for leading us to the full answer; while exploring interesting interactions along the way.
+To answer the research question, we present the following sub-questions to serve as an outline for leading us to the final answer; all while exploring interesting interactions along the way.
 \begin{enumerate}
   \item Can we replicate the design and results of \citet{smaldino}?
   \item How can we extend the model with variable-length memory and what strategies can we define on this new model? What are the effects of shorter/longer memory and is there an optimal length for memory beyond which there is no benefit?
   \item What is the best way to combine own observations and gossip from peers? We want to combine the data in such a way that we keep information about participants we are most likely to interact with in the next round.
   \item Does openly gossiping with other participants boost cooperation, when compared to a no-gossip scenario?
-  \item At what shouting distance is the gossiping most effective? Is it enough to exchange information with other participants on contact (i.e. on the same distance that a round can be played)?
+  \item At what range is the gossiping most effective? Is it enough to exchange information with other participants on contact (i.e. on the same distance that a round can be played)?
   \item What is the difference between gossip-then-play, and play-then-gossip models? Does it make a difference if we gossip before or after playing the round?
   \item Can we maintain this cooperation level by only gossiping compressed categorical data? (e.g. "hostile"/"neutral"/"friendly" instead of "defected in 82\% of rounds when unprovoked") So as to model the way natural language works and how local context skews the absolute meaning of words: "hostile" for one participant could be "friendly" for another.
 \end{enumerate}
@@ -147,34 +144,65 @@ A single round of the game is defined using a payoff matrix as shown in Table \r
   \label{table:payoff}
 \end{table}
 
-\todo{environment characteristics}
+Participants are agents living in a 2D grid, accumulating energy via repeatably engaging in rounds of PD as defined above. Agents are moving synchronously with their their order being randomly determined at every clock tick. They need energy to survive to next round, which is subtracted from all peers at the end of each turn (and agents who deplete their energy die).
+Another use of the energy is to constrain reproduction and allow only the most successful agents to reproduce, producing an offspring with an identical strategy.
 
-\todo{what will be observed}
+We will expand the model with (limited) memory for the agents of past actions of other participants and later allowing them to actively and freely share this knowledge by gossiping at various range.
+
+To determine the effectives of gossiping in inducing cooperation, we will observe the rate of convergence to a population of cooperators, stopping the game once stable equilibrium is achieved. We will use the no-gossip model as a benchmark and compare various range at which gossiping is possible to determine the optimal amount of information transmitted necessary for cooperation to win in the population.
+After that we will compress the gossip into only labels ("hostile"/"neutral"/"friendly") determined by agents based on their local observations.
 
 % Try to break your aims down into small, achievable tasks.
 To achieve the goal of this paper, we define the following subtasks which have to completed:
+\newcommand{\timeest}[1]{\hfill(#1 hours)}
 \begin{enumerate}
-  \item Reimplement the design of \citet{smaldino}.
+  \item \label{subtasks:smaldino}
+    Reimplement the design of \citet{smaldino}.
+    \timeest{10}
+  \item \label{subtasks:smaldino-experiments}
+    Run the model and try to replicate the results
+    \timeest{5}
+  \item \label{subtasks:memory}
+    Expand the model with memory
+    \timeest{10}
+  \item \label{subtasks:memory-strategies}
+    Determine strategies to be used with the memory model
+    \timeest{15}
+  \item \label{subtasks:memory-experiments}
+    Run experiments with varying memory length (determine optimal memory length)
+    \timeest{10}
+  \item \label{subtasks:gossip}
+    Expand the model with gossip at range
+    \timeest{10}
+  \item \label{subtasks:gossip-experiments}
+    Run experiments with varying gossip range (determine optimal range)
+    \timeest{10}
+  \item \label{subtasks:compress}
+    Locally compress transmitted information based on local observations
+    \timeest{10}
+  \item \label{subtasks:compress-experiments}
+    Run experiments to determine the effects of the compression
+    \timeest{15}
 \end{enumerate}
-\todo{define subtasks}
+\textit{(Note: the time estimated are conservative, but optimistic, approximations.)}
+
+% Identify dependencies between these tasks.
+Each of these subtasks is dependant on the successful and total completion of all the previous ones. All of them have to completed sequentially in the order as defined here.
 
 % Which tools/software/data are you going to use? With whom do you intend to collaborate on what (if anyone)? What are their tasks? What are your tasks?
-\todo{describe tools used: MESA/netlogo}
-% Identify dependencies between these tasks.
-\todo{how do tasks depend on each other?}
+For the implementation of the spatial agent model, we are planning to use MESA (\url{https://mesa.readthedocs.io/en/master/}), a Python framework for agent-based simulations. This has been chosen over other options, because of the popularity of the Python programming language (especially in the context of Jupyter notebooks); we hope this will make this project more approachable to a wider audience and inspire more experimentation or allow others to easier extend/modify the implementation.
 
 
 
 \section*{Planning of the research project}
-% Try to estimate how long you will spend on each task, and draw up a timetable for each sub-task.
-\todo{estimate time for subtasks}
+In this section, a preliminary weekly plan is presented. It is based on the subtasks defined for this research in the previous section and referenced by numbers on the right margin.
 
-% \item milestones for completion of the identified (sub)tasks
+\newcommand{\subtask}[1]{\hfill\textbf{(\ref{subtasks:#1})}}
 
 \subsection*{Week 0}
 \begin{enumerate}
 \item Read preliminary research provided by the responsible professor
-\item Explore foundational papers (\citep{smaldino}, \citationneeded{axelrod})
+\item Explore foundational papers \citep{smaldino,Axelrod84}
 \item Read last year's student-papers on this topic
 \item Research recent papers and new research directions
 \item Formulate possible research questions
@@ -198,8 +226,10 @@ To achieve the goal of this paper, we define the following subtasks which have t
 \item \textbf{(April 27 16:00)}: Meeting: peer group + responsible professor
 \item Setup Python development environment
 \item Replicate \citet{smaldino}
+  \subtask{smaldino}
 \item Compare results of the reimplemented model with the original
-\item Study papers concerning reputation systems in the context of PD (\citet{simple-reputation}, \citet{public-private-monitoring}, ...)
+  \subtask{smaldino-experiments}
+\item Study papers concerning reputation systems in the context of PD \citep{simple-reputation,public-private-monitoring}
 \item Prepare research plan presentation
 \item \textbf{Deadline (May 2)}: research plan presentation
 \end{enumerate}
@@ -208,9 +238,12 @@ To achieve the goal of this paper, we define the following subtasks which have t
 \begin{enumerate}
 \item Add memory to the SPD model
 \item Meeting: peer group + responsible professor
-\item Explore \& implement interesting strategies making use of memory \citationneeded
+\item Add memory to the model
+  \subtask{memory}
+\item Define interesting memory-based strategies
+  \subtask{memory-strategies}
 \item Compare results of the model with memory with the original
-\item Formulate a communication model to be used for gossip, how can we combine data so as to keep info on the most likely peers to interact with in the future rounds. \citationneeded{LRU}
+  \subtask{memory-experiments}
 \item Write background + model design sections of the final paper
 \end{enumerate}
 
@@ -218,8 +251,11 @@ To achieve the goal of this paper, we define the following subtasks which have t
 \begin{enumerate}
 \item \textbf{(May 10 10:45)}: responsible research session
 \item Meeting: peer group + responsible professor
+\item Formulate a communication model to be used for gossip, how can we combine data so as to keep info on the most likely peers to interact with in the future rounds.
+  \subtask{gossip}
 \item Test a self-learning model instead of a fixed strategy
-\item Compare gossip-then-play with play-then-gossip models and see if this affects results
+\item Compare gossip-then-play with play-then-gossip models
+  \subtask{gossip-experiments}
 \end{enumerate}
 
 \subsection*{Week 5 - May 23}
@@ -235,8 +271,10 @@ To achieve the goal of this paper, we define the following subtasks which have t
 \begin{enumerate}
 \item Meeting: peer group + responsible professor
 \item Implement communication compression
+  \subtask{compress}
 \item Rerun experiments with communication compression and compare results
 \item Test out communication compression effects on the cooperation levels
+  \subtask{compress-experiments}
 \item Find the optimal levels of compression, which are able to sustain cooperation
 \end{enumerate}
 
@@ -245,6 +283,7 @@ To achieve the goal of this paper, we define the following subtasks which have t
 \item Meeting: peer group + responsible professor
 \item Format diagrams \& plots for the final paper
 \item Write results sections \& conclusion of the paper
+\item Write responsible research section of the paper
 \end{enumerate}
 
 \subsection*{Week 8 - June 13}
