@@ -13,6 +13,7 @@ with pkgs;
 mkShell {
   buildInputs = [
     git
+    pre-commit
 
     texlive.combined.scheme-full
 
