@@ -19,5 +19,10 @@ mkShell {
 
     pyEnv
     tinybeachthor.netlogo
+
+    nodejs
+    yarn
+    chromium
   ];
+  PUPPETEER_EXECUTABLE_PATH = "${chromium}/bin/chromium";
 }
