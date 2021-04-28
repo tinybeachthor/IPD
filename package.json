@@ -4,6 +4,9 @@
   "private": "true",
   "repository": "git@github.com:tinybeachthor/IPD.git",
   "author": "Martin Toman <toman.martin@live.com>",
+  "dependencies": {
+    "react-emoji-render": "^1.2.4"
+  },
   "devDependencies": {
     "mdx-deck": "^4.1.1",
     "website-pdf": "^4.1.0"

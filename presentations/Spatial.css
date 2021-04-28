@@ -1,0 +1,88 @@
+.Grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+@media (orientation: landscape) {
+  .Grid {
+    width: 70vh;
+    height: 70vh;
+  }
+}
+@media (orientation: portrait) {
+  .Grid {
+    width: 70vw;
+    height: 70vw;
+  }
+}
+.Grid > * {
+  position: relative;
+  aspect-ratio: 1;
+  border: 2px solid black;
+}
+.Grid > *:nth-child(3n) {
+  border-left: none;
+}
+.Grid > *:nth-child(3n-2) {
+  border-right: none;
+}
+.Grid > *:nth-child(1) {
+  border-bottom: none;
+}
+.Grid > *:nth-child(2) {
+  border-bottom: none;
+}
+.Grid > *:nth-child(3) {
+  border-bottom: none;
+}
+.Grid > *:nth-child(7) {
+  border-top: none;
+}
+.Grid > *:nth-child(8) {
+  border-top: none;
+}
+.Grid > *:nth-child(9) {
+  border-top: none;
+}
+
+.Empty {
+}
+.Emoji {
+  width: auto !important;
+  height: auto !important;
+}
+.BadgeOverlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40%;
+  height: 40%;
+
+  background: white;
+  border-radius: 100%;
+  transform: scale(1.5);
+}
+.ShoutOverlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 10vmin;
+
+  font-size: 32px;
+  font-size: 5vmin;
+  text-align: center;
+  padding-top: 2vmin;
+
+  background: white;
+  border-radius: 100%;
+  transform: scale(2.0) translate(50%, -20%);
+}
+.ShoutRange {
+  position: absolute;
+  border-radius: 100%;
+  border: 20px dashed black;
+
+  width: 300%;
+  height: 300%;
+  top: -100%;
+  left: -100%;
+}

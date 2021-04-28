@@ -1,6 +1,173 @@
+import { Head } from 'mdx-deck'
+import myTheme from './theme.js'
+import MyFooter from './Footer.js'
+
+import { Grid, Empty, Emoji, Selected, Badge, Shout } from './Spatial.js'
+
+export const theme = myTheme
+
+<Head>
+  <title>Research plan</title>
+</Head>
+
+<Footer>
+  <MyFooter/>
+</Footer>
 
 # Research plan
 
+## Keep your enemies closer and be loud about it
+
+Martin Toman
+
 ---
 
-## IPD
+<Grid>
+  <Empty />
+  <Empty />
+  <Empty />
+
+  <Empty />
+  <Empty />
+  <Empty />
+
+  <Empty />
+  <Empty />
+  <Empty />
+</Grid>
+
+---
+
+<Grid>
+  <Empty />
+  <Empty />
+  <Empty />
+
+  <Empty />
+  <Emoji emoji=":D" />
+  <Empty />
+
+  <Empty />
+  <Empty />
+  <Emoji emoji=":D" />
+</Grid>
+
+---
+
+<Grid>
+  <Empty />
+  <Empty />
+  <Empty />
+
+  <Empty />
+  <Selected color="blue"> <Emoji emoji=":D" /> </Selected>
+  <Empty />
+
+  <Empty />
+  <Empty />
+  <Selected color="blue"> <Emoji emoji=":D" /> </Selected>
+</Grid>
+
+---
+
+<Grid>
+  <Empty />
+  <Empty />
+  <Empty />
+
+  <Empty />
+  <Selected color="blue"> <Emoji emoji="👿" /> </Selected>
+  <Empty />
+
+  <Empty />
+  <Empty />
+  <Selected color="blue"> <Emoji emoji="😇" /> </Selected>
+</Grid>
+
+---
+
+<Grid>
+  <Empty />
+  <Empty />
+  <Empty />
+
+  <Empty />
+  <Badge badge=<Emoji emoji=":thumbsup:"/>> <Emoji emoji="👿" /> </Badge>
+  <Empty />
+
+  <Empty />
+  <Empty />
+  <Badge badge=<Emoji emoji=":thumbsdown:"/>> <Emoji emoji="😇" /> </Badge>
+</Grid>
+
+---
+
+<Grid>
+  <Emoji emoji=":D" />
+  <Empty />
+  <Empty />
+
+  <Empty />
+  <Badge badge=<Emoji emoji=":thumbsup:"/>> <Emoji emoji="👿" /> </Badge>
+  <Empty />
+
+  <Empty />
+  <Emoji emoji=":D" />
+  <Badge badge=<Emoji emoji=":thumbsdown:"/>> <Emoji emoji="😇" /> </Badge>
+</Grid>
+
+---
+
+<Grid>
+  <Selected color="white"> <Emoji emoji=":D" /> </Selected>
+  <Empty />
+  <Empty />
+
+  <Empty />
+  <Emoji emoji="👿" />
+  <Empty />
+
+  <Empty />
+  <Selected color="white"> <Emoji emoji=":D" /> </Selected>
+  <Shout text="👿:thumbsdown:❗"> <Emoji emoji="😇" /> </Shout>
+</Grid>
+
+---
+
+<Grid>
+  <Emoji emoji=":D" />
+  <Empty />
+  <Empty />
+
+  <Empty />
+  <Emoji emoji="👿" />
+  <Empty />
+
+  <Empty />
+  <Selected color="white"> <Emoji emoji=":D" /> </Selected>
+  <Shout range={true} text="👿:thumbsdown:❗"> <Emoji emoji="😇" /> </Shout>
+</Grid>
+
+---
+
+<Grid>
+  <Selected color="blue"> <Emoji emoji=":D" /> </Selected>
+  <Empty />
+  <Empty />
+
+  <Empty />
+  <Selected color="blue"> <Emoji emoji="👿" /> </Selected>
+  <Empty />
+
+  <Empty />
+  <Selected color="white"> <Emoji emoji=":D" /> </Selected>
+  <Shout range={true} text="👿:thumbsdown:❗"> <Emoji emoji="😇" /> </Shout>
+</Grid>
+
+---
+
+## Research goals
+
+1. Can we achieve cooperation?
+2. What is the optimal gossip range?
+3. How to combine own observations with gossip?
