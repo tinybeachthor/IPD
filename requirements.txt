@@ -4,3 +4,6 @@ ipywidgets
 nbstripout == 0.3.7
 
 mesa >= 0.8.8
+numpy
+matplotlib
+holoviews
