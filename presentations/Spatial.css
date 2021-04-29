@@ -1,18 +1,10 @@
 .Grid {
+  width: 70vmin;
+  height: 70vmin;
+
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-}
-@media (orientation: landscape) {
-  .Grid {
-    width: 70vh;
-    height: 70vh;
-  }
-}
-@media (orientation: portrait) {
-  .Grid {
-    width: 70vw;
-    height: 70vw;
-  }
+  grid-template-rows: 1fr 1fr 1fr;
 }
 .Grid > * {
   position: relative;
