@@ -4,6 +4,10 @@
 \usepackage{geometry}
 \geometry{verbose,tmargin=3.5cm,bmargin=4cm,lmargin=3.8cm,rmargin=3.8cm}
 
+% plots
+\usepackage{graphicx}
+\graphicspath{ {../plots/} }
+
 % newlines instead of indent for paragraphs
 \usepackage[parfill]{parskip}
 % tables
@@ -25,8 +29,7 @@
 
 \begin{document}
 
-% \listoftodos
-
+\listoftodos
 
 \title{New Generation Iterative Prisoner’s Dilemma:\\ Keep your enemies closer and be loud about it}
 \author{Martin Toman}
@@ -34,11 +37,13 @@
 \maketitle
 
 
-% \begin{abstract}
+\begin{abstract}
 % The abstract should be short and give the overall idea:
 % what is the background, the research questions, what is contribution, and what are the main conclusions.
 % It should be readable as a stand-alone text (preferably no references to the paper or outside literature).
-% \end{abstract}
+
+\todo{write abstract}
+\end{abstract}
 
 
 \section{Introduction}
@@ -73,13 +78,52 @@ These are non-trivial idealizations: relaxing them would yield a model closer to
 In this paper we explore the feasibility of such a solution; we look at how well a local reputation system sustains cooperation and under what conditions does it yield optimal results.
 We evaluate the approach under varying gossip range and memory length; and conclude the effectiveness of local reputation in enforcing cooperation in spatial prisoner's dilemma.
 
+\todo{outline the structure of the paper}
 
-% \section{Methodology or Problem Description}
-% Choose one that fits your research best:
-% \subsection{Methodology}
+
+\section{Methodology or Problem Description}
+\todo{add section introduction}
+
+\subsection{Methodology}
 % Typically in general research articles, the second section contains a description of the research methodology, explaining what you, the researcher, is doing to answer the research question(s), and why you have chosen this method.
 % For purely analytical work this is a description of the data collection or experimental setup on how to test the hypothesis, with a motivation.
 % In any case this section includes references to necessary background information.
+
+To explore the effects of local reputation, built via openly gossiping with local peers, we are gonna use a computer simulation of a multi-agent spatial environment; we will base it on the design of Spatial Iterated Prisoner’s Dilemma, as used by \citet{smaldino}.
+A single round of the game is defined using a payoff matrix as shown in Table \ref{table:payoff}, with $T > R > P > S$ and $2R > T + S$ \citep{chammah1965}.
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{c c||c|c}
+    & & \multicolumn{2}{c}{Opponent's move} \\
+    & & Cooperate & Defect \\
+    \hline\hline
+
+    \multirow{4}{6em}{Player's move}
+    & \multirow{2}{5em}{Cooperate}
+      & Player:\ \ \ \ \ \ R & Player:\ \ \ \ \ \ S \\
+    & & Opponent: R & Opponent: T \\
+    \cline{2-4}
+    & \multirow{2}{5em}{Defect}
+      & Player:\ \ \ \ \ \ T & Player:\ \ \ \ \ \ P \\
+    & & Opponent: S & Opponent: P \\
+  \end{tabular}
+
+  \caption{Payoff matrix}
+  \label{table:payoff}
+\end{table}
+
+Participants are agents living in a 2D grid, accumulating energy via repeatably engaging in rounds of PD as defined above. Agents are moving at the same speed, and their order in which they take their turn is randomly determined at every clock tick. They pay a fixed cost to survive to a next round, which is subtracted from all peers at the end of each turn (agents who deplete their energy die and are removed from the simulation).
+Another use of the energy is to constrain reproduction and allow only the most successful agents to reproduce, producing an offspring with an identical strategy.
+
+We will expand the model by giving the agents a (limited) memory to keep track of past actions of other participants and later allow them to actively and freely share this knowledge by gossiping at various range.
+
+To determine the effectives of gossiping in inducing cooperation, we will observe the rate of convergence to a population of cooperators, stopping the game once stable equilibrium is achieved. We will use the no-gossip model as a benchmark and compare various range at which gossiping is possible to determine the optimal amount of information transmitted necessary for cooperation to win in the population.
+After that we will compress the gossip into only labels ("hostile"/"neutral"/"friendly") determined by agents based on their local observations.
+
+
+
+
 
 % \subsection{Formal Problem Description}
 % For some types of work in computer science the methodology is standard: analyze the problem (e.g., make assumptions and derive properties), present a new algorithm and its theoretical background, proving its correctness, and evaluate unproven aspects in simulation.
@@ -102,7 +146,7 @@ We evaluate the approach under varying gossip range and memory length; and concl
 % \subsection*{Improvement of an idea}
 % In this case, you would need to explain in detail how the improvement works. If it is based on some observation that can be proven, this is a good place to provide that proof (e.g., of the correctness of your approach).
 
-% \section{Experimental Setup and Results}
+\section{Experimental Setup and Results}
 % As discussed earlier, in many sciences the methodology is explained in section 2 and this section only discusses the results.
 % However, in computer science, most often the details of the evaluation setup are described here first (simulation environment, etc.).
 % Very important here is that any skilled reader would be able to reproduce this setup and then obtain the same results.
@@ -111,9 +155,32 @@ We evaluate the approach under varying gossip range and memory length; and concl
 % Conclusions are drawn that follow logically from the previous material.
 % Sometimes the conclusions are in fact hypotheses, which in turn may give rise to new experiments to be validated.
 
-% You may want to give this section another name.
+\begin{figure}[h!]
+  \centering
+  \includegraphics{frequency_time_with_memory.pdf}
+  \caption{Evolution of agent population over time (memory size = 1)}
+  \label{table:population_evolution}
+\end{figure}
 
-% \section{Responsible Research}
+\begin{figure}[h!]
+  \centering
+  \includegraphics{cooperator_frequency_memory_50steps.pdf}
+  \caption{Agent type frequency after $50$ steps}
+  \label{table:cooperator_frequency_converged_50}
+\end{figure}
+\begin{figure}[h!]
+  \centering
+  \includegraphics{cooperator_frequency_memory_100steps.pdf}
+  \caption{Agent type frequency after $100$ steps}
+  \label{table:cooperator_frequency_converged_100}
+\end{figure}
+
+% You may want to give this section another name.
+\todo{name this section}
+
+
+
+\section{Responsible Research}
 % Reflect on the ethical aspects of your research and discuss the reproducibility of your methods.
 
 % \section{Discussion}
@@ -123,7 +190,9 @@ We evaluate the approach under varying gossip range and memory length; and concl
 
 % You may give this section another name, or merge it with the one before or the one hereafter.
 
-% \section{Conclusions and Future Work}
+
+
+\section{Conclusions and Future Work}
 % Summarize the research question(s) and the answers to the research question(s).
 % Make statements.
 % Highlight interesting elements.
