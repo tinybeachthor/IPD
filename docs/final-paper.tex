@@ -7,6 +7,15 @@
 % plots
 \usepackage{graphicx}
 \graphicspath{ {../plots/} }
+% state diagrams
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\tikzset{
+  initial text={},
+  ->, % makes the edges directed
+  node distance=3.5cm, % specifies the minimum distance between two nodes. Change if necessary.
+  every state/.style={rectangle, thick, text width=5em, align=center}  % sets the properties for each ’state’ node
+}
 
 % newlines instead of indent for paragraphs
 \usepackage[parfill]{parskip}
@@ -118,10 +127,38 @@ each cell can be occupied by a single agent.
 This is a discreet time model;
 in each time step, every agent takes a single turn.
 The order in which agents take their turn is randomized in each time step.
-Agent's turn is defined by a finite state automaton. \todo{add a reference to automaton of agent behaviour}
+Agent's turn is defined by the finite state diagram shown in Figure \ref{fig:agent_behaviour}.
 The agents pay a fixed cost to survive to the next round (agents who deplete their energy die and are removed from the simulation), and try to reproduce once they accumulate enough energy via positive interactions with other agents: game wins.
 
-\todo{add agent behaviour automaton}
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+
+    \node[state, initial] (find_opponent) {Find Opponent?};
+
+    \node[state, below of=find_opponent] (play) {Play PD Game};
+    \node[state, right of=play] (reproduce) {Attempt to Reproduce};
+    \node[state, right of=find_opponent] (move) {Attempt Movement};
+    \node[state, right of=move] (cost) {Pay Cost of Living};
+    \node[state, below of=cost] (energy) {Energy $\le 0$?};
+
+    \node[state, accepting, right of=energy] (die) {Die};
+    \node[state, accepting, above of=die] (end) {End Turn};
+
+    \draw
+      (find_opponent) edge[left] node{Yes} (play)
+      (find_opponent) edge[above] node{No}  (move)
+      (play) edge[] node{} (reproduce)
+      (reproduce) edge[] node{} (cost)
+      (move) edge[] node{} (cost)
+      (cost) edge[] node{} (energy)
+      (energy) edge[right] node{No}  (end)
+      (energy) edge[below] node{Yes} (die)
+      ;
+  \end{tikzpicture}
+  \caption{Agent behaviour diagram, derivation of \citationneeded}
+  \label{fig:agent_behaviour}
+\end{figure}
 
 Agents reproduce by creating a new agent with the same parameters as themselves in an empty neighborhood cell.
 The cost of reproduction is subtracted from the parent and the offspring is birthed with this energy level.
