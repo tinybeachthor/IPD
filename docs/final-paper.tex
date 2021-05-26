@@ -41,12 +41,17 @@
 \listoftodos
 
 \title{Keep your enemies closer and be loud about it}
-\author{Martin Toman}
-\date{06 May 2021}
+\author{
+  Martin Toman, TUDelft
+  \\
+  m.toman@student.tudelft.nl
+\and
+  Dr. Neil Yorke-Smith, TUDelft
+  \\
+  n.yorke-smith@tudelft.nl
+}
+\date{25 May 2021}
 \maketitle
-
-\todo{add supervisor name}
-\todo{add contact info and institution}
 
 
 \begin{abstract}
@@ -213,17 +218,37 @@ The range at which agents can be contacted and the amount of information which a
 In the results section, an overview of the effects of varying the parameters of the gossip is shown.
 We believe this extension of the model will have a strong positive effect on sustaining cooperation in the model.
 
+The simulation will be implemented in Python using the Mesa\footnote{\url{https://github.com/projectmesa/mesa}} framework.
+
 \subsection{Simulation Evaluation}
 
-To determine the effectives of gossip in enforcing cooperation, we will observe the rate of convergence to a population of cooperators, stopping the simulation once stable equilibrium is achieved. We will also observe the maximal population size of defectors which can sustain itself alongside the cooperators.
+To determine the effectives of gossip in promoting cooperation, we will observe the rate of convergence to a population of cooperators, stopping the simulation once stable equilibrium is achieved.
+To verify that this is indeed an equilibrium by letting the simulation run longer and checking that the general behaviour does not change.
+We will also observe the maximal population size of defectors which can sustain itself alongside the cooperators.
 
-\todo{show how we evaluation the effectiveness}
+The main attributes measures about the model will be the frequency of cooperators and defectors;
+we will measure both as the fraction of agents of the type alive in the model divided by the total carrying capacity of the population - 50\% of all the cells for either type of agents.
+This is the same measure as used by the original paper \citep{smaldino}.
 
-We will also record characteristic patterns formed by the populations as influenced by different parameters. \citationneeded
+Measuring both, the cooperator and the defector, frequency might seem redundant at first. However, the relationship between them is very highly nonlinear and depends on many factors;
+as will be shown in the results section.
+
+We will also record characteristic patterns formed by the populations as influenced by different parameters.
+We do this, because it was shown by earlier work \citep{spatial-patterns} that in Spatial Prisoner's Dilemma interesting patterns can emerge over time.
+These patterns are very similar to patterns occurring in nature, which are often created by reaction-diffusion processes.
+This suggests a deeper link between our model and natural processes.
 
 
 
 \section{Results}
+Now we present the results of our simulation
+with commentary on the setup and meaning of the results.
+We show the results impartially and let the data do most of the talking.
+A thorough explanation of the data in the wider context of similar research
+with explanation of wider implications will be in the next section.
+
+\todo{outline the results presented}
+
 % As discussed earlier, in many sciences the methodology is explained in section 2 and this section only discusses the results.
 % However, in computer science, most often the details of the evaluation setup are described here first (simulation environment, etc.).
 % Very important here is that any skilled reader would be able to reproduce this setup and then obtain the same results.
@@ -252,9 +277,6 @@ We will also record characteristic patterns formed by the populations as influen
   \label{table:cooperator_frequency_converged_100}
 \end{figure}
 
-% You may want to give this section another name.
-\todo{name this section}
-
 
 
 \section{Discussion}
@@ -270,23 +292,23 @@ We will also record characteristic patterns formed by the populations as influen
 \section{Responsible Research}
 We recognize the inherent difficulties in conducting ethical and sustainable research.
 We take the following actions to ensure this paper is ethically good
-and can be reproduced by others, to provide a solid foundation for others to comfortably reproduce, reuse and build upon this paper.
+and can be reproduced by others, to provide a solid foundation for others to reproduce, reuse, and build upon this paper.
 
 % Reflect on the ethical aspects of your research and discuss the reproducibility of your methods.
 \subsection{Ethical aspects}
 This paper focused on exploring the effects of reputation on promoting and sustaining cooperation.
-We believe this an ethically good research to pursue and our conscience is clean about the methods used and conclusions reach, as well as all other aspects of this paper.
+We believe this research is ethically good and our conscience is clean about the methods used and conclusions reach, as well as all other aspects of this paper.
 
-While we cannot ensure the findings of this paper will not be misused by others. We implore all reader's to always strive for the highest ethical goals.
+While we cannot ensure the findings of this paper will not be misused by others. We implore all reader's to always strive for the highest ethical ideals.
 Let's all be excellent.
 
 \subsection{Reproducibility}
 We want to make this paper a good foundation for future work and as such we provide all source materials for this paper: including the code files for running the simulations and evaluating results, the \LaTeX\ files for this paper, and anything else used while conducting this research.
 
-Next we use Nix Flake \citationneeded to capture the exact versions of all software, libraries, and packages used for this research. All of this is packaged together and provided as a fully reproducible environment.
+Next, we use Nix Flake\footnote{\url{https://nixos.wiki/wiki/Flakes}} to capture the exact versions of all software, libraries, and packages used for this research \citep{nix}. All of this is captured together in and provided as a fully reproducible environment.
 We hope that by doing this it becomes easy to reproduce our results and provide a good foundation environment for other researchers to quickly kick-start their research.
 
-Our model itself is implemented in a Jupyter Notebook \citationneeded and care was taken to keep the total amount of dependencies as low as possible and to stick to the most standard dependencies whenever possible.
+Our model itself is implemented in a Jupyter Notebook\footnote{\url{https://jupyter.org/}} and care was taken to keep the total amount of dependencies as low as possible and to stick to the most standard dependencies whenever possible.
 We hope others will appreciate this by building upon our research and uncovering wonderful conclusions.
 
 
