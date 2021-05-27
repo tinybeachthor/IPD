@@ -42,11 +42,11 @@
 
 \title{Keep your enemies closer and be loud about it}
 \author{
-  Martin Toman, TUDelft
+  Martin Toman; TUDelft
   \\
   m.toman@student.tudelft.nl
 \and
-  Dr. Neil Yorke-Smith, TUDelft
+  Dr. Neil Yorke-Smith; TUDelft
   \\
   n.yorke-smith@tudelft.nl
 }
@@ -83,11 +83,11 @@ Such a risk may just not be worth it.
 
 % global reputation system
 The defectors can, naturally, only be punished if they can be identified and known to others. This is why services like Ebay or Airbnb have a rating system in place.
-Presence of a reputation system has been shown to strongly boost cooperation, as shown by \citet{simple-reputation} and \citet{public-private-monitoring}.
+Presence of a reputation system has been shown to strongly boost cooperation, as shown by \citet{simple-reputation, public-private-monitoring}.
 These studies used groups of volunteers as game participants and explored the effects of various information being public - from only the latest move of the current opponent, to full histories of all moves taken by every participant.
 
 % decentralizing reputation: keeping track internally?
-These studies were limited by their use of humans as game participants and were thus limited to relatively small groups with few rounds; they also used external infrastructure for information passing: therefore eliminating noise, delays, and deliberately wrong information.
+Using human subjects as game participants limited the research to relatively small groups with few rounds; they also used external infrastructure for information passing: eliminating noise, delays, and deliberately wrong information.
 As shown by \citet{noise}, not all strategies that perform well in noise-less environments can do so under the presence of noise.
 
 Using external infrastructure for passing information also meant that the transmission speed was uniform for all participants receiving all necessary information in time for their next round of the game.
@@ -111,9 +111,9 @@ We end the section with an explanation of how we will connect our simulation res
 and what would constitute a confirmation of our hypothesis.
 
 \subsection{Problem Statement}
-We will use the prisoner's dilemma game to model the main interaction between the agents.
-This is a good choice for observing conditions necessary for cooperation to emerge in a population of rational and selfish agents.
-\citationneeded
+We will use the prisoner's dilemma game to model agent interactions.
+This is a good choice for modelling behaviour of rational and selfish actors.
+And will allow us to observe the conditions necessary for cooperation to emerge in the population as well as what makes it sustain itself.
 
 The agents will live in a spatial environment and act independently;
 the only mutual interactions will be playing the game with a neighbor and exchanging gossip with nearby agents.
@@ -135,7 +135,7 @@ This is a discreet time model;
 at each time step, every agent takes a single turn.
 The order in which agents take their turn is randomized in each time step.
 Agent's turn is defined by the finite state diagram shown in Figure \ref{fig:agent_behaviour}.
-The agents pay a fixed cost to survive to the next round (agents who deplete their energy die and are removed from the simulation), and try to reproduce once they accumulate enough energy via positive interactions with other agents: game wins.
+The agents pay a fixed cost to survive ($c = 1$) to the next round (agents who deplete their energy die and are removed from the simulation), and try to reproduce once they accumulate enough energy via positive interactions with other agents: PD game wins.
 
 \begin{figure}[h]
   \centering
@@ -167,17 +167,26 @@ The agents pay a fixed cost to survive to the next round (agents who deplete the
   \label{fig:agent_behaviour}
 \end{figure}
 
-Agents reproduce by creating a new agent with the same parameters as themselves in an empty neighborhood cell.
-The cost of reproduction is subtracted from the parent and the offspring is birthed with this energy level.
+Every agent can play at most a single PD game in each time step.
+Plating a game in the time step is not guaranteed and depends on the spatial configuration of agents, order in which the agents are scheduled, and randomness in choosing an opponent from agent's neighbors.
+Similarly, when no opponent is found, movement only happens if an empty cell is found nearby; if there is more than one empty cell, one is chosen randomly.
+
+Agents reproduce by creating a new agent with the same parameters as themselves in an empty neighborhood cell (chosen randomly if more than one, no reproduction if there are no empty cells in the neighborhood).
+Reproduction is only attempted if the agent has accumulated at least twice the amount of energy as is the cost of reproduction.
+The cost of reproduction is then subtracted from the parent and the offspring is birthed with this energy level.
 The cost of reproduction is effectively transferred from the parent to the offspring;
 reproducing does not change the net amount of energy in the model.
 
 A single round of the game is defined using a payoff matrix as shown in Table \ref{table:payoff}, with $T > R > P > S$ and $2R > T + S$ \citep{chammah1965}.
 Like in the original model, we will use $T = 5$, $R = 3$, $P = -1$, and $S = 0$ for all our simulation runs.
-We choose the punishment payoff value ($P = -1$), because this was shown in the original paper as a good
-middle of the road value and the cooperators struggled to survive under these payoff values.
-This choice of parameters will make sure that, if we reach cooperation, it was caused by the reputation mechanism
-; and not because of random interactions in the model.
+We choose the punishment payoff value ($P = -1$),
+because this was shown in the original paper as a good middle of the road value and the cooperators struggled to survive under these payoff values.
+This choice of parameters will make sure that, if we reach cooperation, it was caused by the reputation mechanism;
+and not because of random interactions in the model.
+
+Environmental harshness of the model is defined by the punishment payoff $P$ (social harshness) and cost to survive $c$ (external harshness).
+We will investigate the effect of varying these parameters on our results
+and check the effectiveness of gossip across environments of various harshness.
 
 \begin{table}[h!]
   \centering
@@ -210,7 +219,7 @@ caused by the random behaviour of agents exploiting each other until all coopera
 We disregard runs that end in extinction and increase the number of simulation runs to compensate for this.
 
 We will expand the model by giving the agents a (limited size) memory to keep track of past defectors and later to allow them to actively and freely share this knowledge by gossiping with other agents in a given range.
-\todo{add references to related work on memory}
+Prior research \citep{memory, reciprocity, adaptive-interaction} has already shown that memory can be an effective tool in promoting cooperation.
 
 Another expansion to the model will be the addition of the localized gossip mechanism.
 This will allow agents to consult nearby peers to try and find out the reputation of agents unknown to the agents themselves.
@@ -226,8 +235,8 @@ To determine the effectives of gossip in promoting cooperation, we will observe 
 To verify that this is indeed an equilibrium by letting the simulation run longer and checking that the general behaviour does not change.
 We will also observe the maximal population size of defectors which can sustain itself alongside the cooperators.
 
-The main attributes measures about the model will be the frequency of cooperators and defectors;
-we will measure both as the fraction of agents of the type alive in the model divided by the total carrying capacity of the population - 50\% of all the cells for either type of agents.
+The main properties measured about the model will be the frequency of cooperators and defectors.
+We will measure both as the fraction of agents of the type alive in the model divided by the total carrying capacity of the population: 50\% of all the cells for either type of agents.
 This is the same measure as used by the original paper \citep{smaldino}.
 
 Measuring both, the cooperator and the defector, frequency might seem redundant at first. However, the relationship between them is very highly nonlinear and depends on many factors;
@@ -257,25 +266,35 @@ with explanation of wider implications will be in the next section.
 % Conclusions are drawn that follow logically from the previous material.
 % Sometimes the conclusions are in fact hypotheses, which in turn may give rise to new experiments to be validated.
 
-\begin{figure}[h!]
-  \centering
-  \includegraphics{frequency_time_with_memory.pdf}
-  \caption{Evolution of agent population over time (memory size = 1)}
-  \label{table:population_evolution}
-\end{figure}
+\subsection{Baseline model}
+\todo{0memory, no gossip model: show how defectors dominate}
 
-\begin{figure}[h!]
-  \centering
-  \includegraphics{cooperator_frequency_memory_50steps.pdf}
-  \caption{Agent type frequency after $50$ steps}
-  \label{table:cooperator_frequency_converged_50}
-\end{figure}
-\begin{figure}[h!]
-  \centering
-  \includegraphics{cooperator_frequency_memory_100steps.pdf}
-  \caption{Agent type frequency after $100$ steps}
-  \label{table:cooperator_frequency_converged_100}
-\end{figure}
+\subsection{Remember defectors}
+\todo{baseline + memory, no gossip: promoted cooperation, defectors catch up}
+
+\subsection{Gossip about defectors}
+\todo{gossip model: defectors die off quickly}
+\todo{check robustness across harshness}
+
+% \begin{figure}[h!]
+%   \centering
+%   \includegraphics{frequency_time_with_memory.pdf}
+%   \caption{Evolution of agent population over time (memory size = 1)}
+%   \label{table:population_evolution}
+% \end{figure}
+
+% \begin{figure}[h!]
+%   \centering
+%   \includegraphics{cooperator_frequency_memory_50steps.pdf}
+%   \caption{Agent type frequency after $50$ steps}
+%   \label{table:cooperator_frequency_converged_50}
+% \end{figure}
+% \begin{figure}[h!]
+%   \centering
+%   \includegraphics{cooperator_frequency_memory_100steps.pdf}
+%   \caption{Agent type frequency after $100$ steps}
+%   \label{table:cooperator_frequency_converged_100}
+% \end{figure}
 
 
 
@@ -314,18 +333,18 @@ We hope others will appreciate this by building upon our research and uncovering
 
 
 \section{Conclusions and Future Work}
+% ideally, this section can stand on its own: it should be readable without having read the earlier sections.
+\todo{summary intro}
+
+\subsection{Our conclusions}
 % Summarize the research question(s) and the answers to the research question(s).
 % Make statements.
 % Highlight interesting elements.
-
-% Discuss open issues, possible improvements, and new questions that arise from this work; formulate recommendations for further research.
-
-% ideally, this section can stand on its own: it should be readable without having read the earlier sections.
-\subsection{Our conclusions}
 \todo{conclude}
 
 \subsection{Future work}
-\todo{outline future work: noise, more complex agents, p2p?, make the model public}
+% Discuss open issues, possible improvements, and new questions that arise from this work; formulate recommendations for further research.
+\todo{outline future work: noise, more complex agents, probabilistic strategies}
 
 
 
