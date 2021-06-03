@@ -7,6 +7,7 @@
 % plots
 \usepackage{graphicx}
 \graphicspath{ {../plots/} }
+\usepackage{calc}
 % state diagrams
 \usepackage{tikz}
 \usetikzlibrary{automata, positioning, arrows}
@@ -96,7 +97,11 @@ These are non-trivial idealizations: relaxing them would yield a model closer to
 In this paper we look at if and how well a local reputation system sustains cooperation and under what conditions does it yield optimal results.
 We evaluate the approach under various gossip range and memory length; and comment on the effectiveness of local reputation in enforcing cooperation in spatial prisoner's dilemma.
 
-\todo{outline the structure of the paper}
+This was the introduction of the paper, with a short background, motivation, and explanation of the goals of this paper.
+In the next section we define the goals explicitly and show the methodology we will use for this research.
+Afterwards we show the results with short impartial explanations, followed by discussion of the implications of the results we obtained;
+we also connect our results with similar research and comment on the findings.
+We close the paper with a short reflection on the ethical aspects and the reproducibility of this paper, after which we summarize and explicitly state our conclusions with some ideas for further research directions.
 
 
 \section{Methodology}
@@ -135,7 +140,7 @@ This is a discreet time model;
 at each time step, every agent takes a single turn.
 The order in which agents take their turn is randomized in each time step.
 Agent's turn is defined by the finite state diagram shown in Figure \ref{fig:agent_behaviour}.
-The agents pay a fixed cost to survive ($c = 1$) to the next round (agents who deplete their energy die and are removed from the simulation), and try to reproduce once they accumulate enough energy via positive interactions with other agents: PD game wins.
+The agents pay a fixed cost to survive ($k = 0.5$) to the next round (agents who deplete their energy die and are removed from the simulation), and try to reproduce once they accumulate enough energy via positive interactions with other agents: PD game wins.
 
 \begin{figure}[h]
   \centering
@@ -177,17 +182,6 @@ The cost of reproduction is then subtracted from the parent and the offspring is
 The cost of reproduction is effectively transferred from the parent to the offspring;
 reproducing does not change the net amount of energy in the model.
 
-A single round of the game is defined using a payoff matrix as shown in Table \ref{table:payoff}, with $T > R > P > S$ and $2R > T + S$ \citep{chammah1965}.
-Like in the original model, we will use $T = 5$, $R = 3$, $P = -1$, and $S = 0$ for all our simulation runs.
-We choose the punishment payoff value ($P = -1$),
-because this was shown in the original paper as a good middle of the road value and the cooperators struggled to survive under these payoff values.
-This choice of parameters will make sure that, if we reach cooperation, it was caused by the reputation mechanism;
-and not because of random interactions in the model.
-
-Environmental harshness of the model is defined by the punishment payoff $P$ (social harshness) and cost to survive $c$ (external harshness).
-We will investigate the effect of varying these parameters on our results
-and check the effectiveness of gossip across environments of various harshness.
-
 \begin{table}[h!]
   \centering
   \begin{tabular}{c c||c|c}
@@ -209,10 +203,28 @@ and check the effectiveness of gossip across environments of various harshness.
   \label{table:payoff}
 \end{table}
 
+A single round of the game is defined using a payoff matrix as shown in Table \ref{table:payoff}, with $T > R > P > S$ and $2R > T + S$ \citep{chammah1965}.
+Like in the original model \citep{smaldino},
+we use $R = 3$ (reward for cooperating),
+$T = 5$ (temptation to defect),
+$P = 0$ (punishment for mutual defection).
+We use a different $S = -1.5$ (sucker's payoff - cooperator got defected) from $S = -1.0$ in the original.
+
+We choose the sucker's payoff value ($S = -1.5$) empirically,
+by running simulations of the model and taking note of a value which leads to cooperator extinction relatively quickly.
+This choice for the parameter will ensure that, if we reach cooperation, it was caused by the reputation mechanism;
+and not because of random interactions in the model.
+
+Environmental harshness of the model is defined by
+the sucker's payoff $P$ (social harshness)
+and cost to survive $k$ (external harshness).
+We will investigate the effect of varying these parameters on our results
+and check the effectiveness of gossip across environments of various harshness.
+
 To better suit our needs we will introduce some changes to the original model.
 We will reduce the spatial grid size from 100x100, as in the original design, to a more manageable 20x20.
 This will allow us to run more simulations with more complex agent behaviour in a manageable time.
-We will also decrease the starting number of agents from 1600 to 64: keeping the same ratio of 16\% of the total grid size as in the original model.
+We will also decrease the starting number of agents from 1600 to 64: keeping the same percentage of 16\% of the total grid size occupied as in the original model.
 
 This reduction of the environment size (by a factor of 25!) has the effect of significantly increasing the chance of a total extinction of all agents:
 caused by the random behaviour of agents exploiting each other until all cooperators are dead and the population of pure defectors cannot sustain itself.
@@ -235,11 +247,25 @@ To determine the effectives of gossip in promoting cooperation, we will observe 
 To verify that this is indeed an equilibrium by letting the simulation run longer and checking that the general behaviour does not change.
 We will also observe the maximal population size of defectors which can sustain itself alongside the cooperators.
 
-The main properties measured about the model will be the frequency of cooperators and defectors.
-We will measure both as the fraction of agents of the type alive in the model divided by the total carrying capacity of the population: 50\% of all the cells for either type of agents.
-This is the same measure as used by the original paper \citep{smaldino}.
+The main properties measured about the model will be the saturation of cooperator and defector populations.
+We will measure the saturation as the fraction of agents of the type alive in the model divided by
+the total carrying capacity of the population: 50\% of all the cells.
+This differs from the measure of agent type frequency used by \citet{smaldino};
+we have chosen to use the saturation measurement because with the decreased size model we encounter total extinction more often,
+and with the gossip extension aim to speed up defector extinction.
 
-Measuring both, the cooperator and the defector, frequency might seem redundant at first. However, the relationship between them is very highly nonlinear and depends on many factors;
+We believe the measure of agent type saturation is clearer and easier to understand
+as the relative population sizes do not influence the measure of the other type (as frequency does).
+Consider the case of 10 defector and 10 cooperator with maximal carrying capacity of 20 for either type:
+saturation is 50\% for both agent types, and cooperator frequency is also 50\%.
+Now 10 more cooperators are born:
+defector saturation stays at 50\%, cooperator saturation increases to 100\%,
+and the cooperator frequency changes to 33.3\%.
+Using the saturations explain what happened more clearly at the cost of having to present 2 complementary charts for each measurement:
+one for cooperator and one for defector saturation.
+
+Measuring both, the cooperator and the defector saturation might seem redundant at first.
+However, the relationship between them is highly nonlinear and depends on many factors
 as will be shown in the results section.
 
 We will also record characteristic patterns formed by the populations as influenced by different parameters.
@@ -253,48 +279,96 @@ This suggests a deeper link between our model and natural processes.
 Now we present the results of our simulation
 with commentary on the setup and meaning of the results.
 We show the results impartially and let the data do most of the talking.
-A thorough explanation of the data in the wider context of similar research
+A thorough explanation of the data in the context of similar research
 with explanation of wider implications will be in the next section.
 
-\todo{outline the results presented}
+We start by presenting the behaviour of the plain (baseline) model in the first subsection,
+then we expand it by adding memory and show how this alters the results obtained,
+afterwards we enable communication (gossip) between agents and rerun the simulations once again.
 
-% As discussed earlier, in many sciences the methodology is explained in section 2 and this section only discusses the results.
-% However, in computer science, most often the details of the evaluation setup are described here first (simulation environment, etc.).
-% Very important here is that any skilled reader would be able to reproduce this setup and then obtain the same results.
+After making the comparisons between the behaviour as influenced by various extensions we look a closer look at the robustness of the gossip model against environmental harshness: both social (sucker's payoff $S$) and external (cost of living $k$).
 
-% Then, results are reported in an accessible manner through figures (preferably with captions that allow them to be understood without going through the whole text), observations are made that clearly follow from the presented results.
-% Conclusions are drawn that follow logically from the previous material.
-% Sometimes the conclusions are in fact hypotheses, which in turn may give rise to new experiments to be validated.
+We wrap this section by comparing the characteristic spatial patterns of the models.
+
 
 \subsection{Baseline model}
-\todo{0memory, no gossip model: show how defectors dominate}
+First we look at the plain model with 0-memory and no communication (gossip) between agents.
+This is a replication of \citet{smaldino}; with some alterations.
+As explained in the model design subsection, we modify the original model slightly.
+We decrease the size of the grid from 100x100 to 20x20,
+and decrease the starting agent count from 1600 to 64.
+We will keep torus (wrapping) bounds, as in the original paper.
+We will also keep some other parameters:
+starting energy will be randomly chosen for each agent to be between 1 and 49 (inclusive),
+energy cost to reproduce is 50 (agent has to accumulate at least 100 energy and reproduces by transferring 50 to the offspring),
+and the maximum energy an agent can hold is 150.
+
+For the PD game payoffs we will use $R = 3$, $T = 5$, $S = -1.5$, and $P = 0$.
+And the living cost $k = 0.5$.
+These values were shown to lead to the cooperators struggling to survive
+and maintain their numbers \citep{smaldino}.
+
+Unless otherwise noted, we will use these parameters for all simulation runs.
+
+We begin by exploring the robustness of the model against social harshness - represented by the $S$ (sucker's payoff) parameter.
+In Figure \ref{fig:agent_sat/S-memory0gossip0} we present the results of running the simulation for $2.5 \leq S \leq 0.0$.
+We observe that $S = -1.5$ leads to total extinction in the model by step 500;
+we will use this value for the parameter for further simulations to determine the effectiveness of memory and the gossip mechanism in promoting and sustaining cooperation.
+
+\begin{figure}[!h]
+  \centering
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&S-memory0+gossip0_100steps_large}
+  }
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&S-memory0+gossip0_250steps_large}
+  }
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&S-memory0+gossip0_500steps_large}
+  }
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&S-memory0+gossip0_1000steps_large}
+  }
+  \caption{Agent type saturation for various $S$ (sucker's payoff) after 100, 250, 500, 1000 steps; SD of 30 simulation runs, outliers removed}
+  \label{fig:agent_sat/S-memory0gossip0}
+\end{figure}
+
 
 \subsection{Remember defectors}
-\todo{baseline + memory, no gossip: promoted cooperation, defectors catch up}
+We have determined the value of for the parameter $S = -1.5$ which repeatably leads to extinction of the whole population by step 500.
+
+Now we expand the model by allowing agents to remember some fixed number of most recent defectors encountered. We will examine how varying the number of defectors which can be remembered (memory size) influences the cooperator and defector saturations.
+
+\begin{figure}[]
+  \centering
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&memory_size-gossip0_100steps_large}
+  }
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&memory_size-gossip0_150steps_large}
+  }
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&memory_size-gossip0_175steps_large}
+  }
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&memory_size-gossip0_500steps_large}
+  }
+  \caption{Agent type saturation for various memory sizes after 100, 150, 175, 500 steps; SD of 30 simulation runs, outliers removed}
+  \label{fig:agent_sat/memory_size}
+\end{figure}
+
+The effect of various memory sizes on the agent type saturations are shown in Figure \ref{fig:agent_sat/memory_size}.
+\todo{conclusion on memory effect : both live well, cooperators have an edge and are faster to saturate}
+
 
 \subsection{Gossip about defectors}
 \todo{gossip model: defectors die off quickly}
-\todo{check robustness across harshness}
 
-% \begin{figure}[h!]
-%   \centering
-%   \includegraphics{frequency_time_with_memory.pdf}
-%   \caption{Evolution of agent population over time (memory size = 1)}
-%   \label{table:population_evolution}
-% \end{figure}
+\todo{check robustness against harshness}
 
-% \begin{figure}[h!]
-%   \centering
-%   \includegraphics{cooperator_frequency_memory_50steps.pdf}
-%   \caption{Agent type frequency after $50$ steps}
-%   \label{table:cooperator_frequency_converged_50}
-% \end{figure}
-% \begin{figure}[h!]
-%   \centering
-%   \includegraphics{cooperator_frequency_memory_100steps.pdf}
-%   \caption{Agent type frequency after $100$ steps}
-%   \label{table:cooperator_frequency_converged_100}
-% \end{figure}
+
+\subsection{Spatial patterns}
+\todo{characteristic patterns}
 
 
 
