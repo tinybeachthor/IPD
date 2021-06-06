@@ -268,6 +268,10 @@ Measuring both, the cooperator and the defector saturation might seem redundant 
 However, the relationship between them is highly nonlinear and depends on many factors
 as will be shown in the results section.
 
+All simulations will be run 30 times for each parameter combination and we will plot the standard deviations of the results.
+We will drop the 2 most extreme outliers, both positive and negative, from the plots; this allows us to show the actual behaviour of the model, devoid of unusual probabilistic anomalies.
+To ensure integrity of the results, we check the outliers removed and investigate any unusual interaction for relevance to the results.
+
 We will also record characteristic patterns formed by the populations as influenced by different parameters.
 We do this, because it was shown by earlier work \citep{spatial-patterns} that in Spatial Prisoner's Dilemma interesting patterns can emerge over time.
 These patterns are very similar to patterns occurring in nature, which are often created by reaction-diffusion processes.
@@ -310,12 +314,7 @@ and maintain their numbers \citep{smaldino}.
 
 Unless otherwise noted, we will use these parameters for all simulation runs.
 
-We begin by exploring the robustness of the model against social harshness - represented by the $S$ (sucker's payoff) parameter.
-In Figure \ref{fig:agent_sat/S-memory0gossip0} we present the results of running the simulation for $2.5 \leq S \leq 0.0$.
-We observe that $S = -1.5$ leads to total extinction in the model by step 500;
-we will use this value for the parameter for further simulations to determine the effectiveness of memory and the gossip mechanism in promoting and sustaining cooperation.
-
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
   \makebox[\textwidth]{
     \includegraphics[width=\paperwidth-4cm]{saturation&S-memory0+gossip0_100steps_large}
@@ -333,13 +332,18 @@ we will use this value for the parameter for further simulations to determine th
   \label{fig:agent_sat/S-memory0gossip0}
 \end{figure}
 
+We begin by exploring the robustness of the model against social harshness - represented by the $S$ (sucker's payoff) parameter.
+In Figure \ref{fig:agent_sat/S-memory0gossip0} we present the results of running the simulation for $2.5 \leq S \leq 0.0$.
+We observe that $S = -1.5$ leads to total extinction in the model by step 500;
+we will use this value for the parameter for further simulations to determine the effectiveness of memory and the gossip mechanism in promoting and sustaining cooperation.
+
 
 \subsection{Remember defectors}
 We have determined the value of for the parameter $S = -1.5$ which repeatably leads to extinction of the whole population by step 500.
 
 Now we expand the model by allowing agents to remember some fixed number of most recent defectors encountered. We will examine how varying the number of defectors which can be remembered (memory size) influences the cooperator and defector saturations.
 
-\begin{figure}[]
+\begin{figure}[!ht]
   \centering
   \makebox[\textwidth]{
     \includegraphics[width=\paperwidth-4cm]{saturation&memory_size-gossip0_100steps_large}
@@ -351,24 +355,108 @@ Now we expand the model by allowing agents to remember some fixed number of most
     \includegraphics[width=\paperwidth-4cm]{saturation&memory_size-gossip0_175steps_large}
   }
   \makebox[\textwidth]{
-    \includegraphics[width=\paperwidth-4cm]{saturation&memory_size-gossip0_500steps_large}
+    \includegraphics[width=\paperwidth-4cm]{saturation&memory_size-gossip0_250steps_large.pdf}
   }
-  \caption{Agent type saturation for various memory sizes after 100, 150, 175, 500 steps; SD of 30 simulation runs, outliers removed}
+  \caption{Agent type saturation for various memory sizes after 100, 150, 175, 250 steps; SD of 30 simulation runs, outliers removed}
   \label{fig:agent_sat/memory_size}
 \end{figure}
 
 The effect of various memory sizes on the agent type saturations are shown in Figure \ref{fig:agent_sat/memory_size}.
-\todo{conclusion on memory effect : both live well, cooperators have an edge and are faster to saturate}
+Allowing agents to remember defector increases convergence speed to saturated population.
+Cooperators benefit from this more as they saturate faster.
+After cooperators reach full saturations, defectors start to reproduce faster and soon catch up with cooperators, reaching full population saturation.
+
+Increasing the memory size has only a small effect on decreasing cooperator saturation time and increasing defector saturation time.
+This is a desired effect, however, it is very minute and is not worth the extra trouble of managing a large queue-based memory.
+In the long run, memory size beyond one does not provide additional benefits.
 
 
 \subsection{Gossip about defectors}
-\todo{gossip model: defectors die off quickly}
+Next we enable communication between the agents.
+We will allow agents to ask nearby agents in a Moore neighborhood of radius 1, 2, and 3 to ask others if they remember an agent defecting in a certain number of past encounters (gossip size).
 
-\todo{check robustness against harshness}
+We will set agent memory size to $5$.
+The gossip size will vary between $0$ and $5$ inclusive.
+We run the simulation for 200 and 1000 steps and plot the agent type saturations in Figure \ref{fig:agent_sat/gossip_size_step200} and Figure \ref{fig:agent_sat/gossip_size_step1000} respectively.
+
+\begin{figure}[!h]
+  \centering
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&gossip_size-range1_200steps_large.pdf}
+  }
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&gossip_size-range2_200steps_large.pdf}
+  }
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&gossip_size-range3_200steps_large.pdf}
+  }
+  \caption{Agent type saturation for various gossip sizes after 200 steps, gossip radii 1, 2, and 3, respectively top to bottom; SD of 30 simulation runs, outliers removed}
+  \label{fig:agent_sat/gossip_size_step200}
+\end{figure}
+
+\begin{figure}[!h]
+  \centering
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&gossip_size-range1_1000steps_large.pdf}
+  }
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&gossip_size-range2_1000steps_large.pdf}
+  }
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&gossip_size-range3_1000steps_large.pdf}
+  }
+  \caption{Agent type saturation for various gossip sizes after 1000 steps, gossip radii 1, 2, and 3, respectively top to bottom; SD of 30 simulation runs, outliers removed}
+  \label{fig:agent_sat/gossip_size_step1000}
+\end{figure}
+
+
+\subsection{Robustness of the gossip}
+We have found that the introduction of gossip is a strong deterrent of defection and leads to cooperator-only populations quickly.
+The size of the memory and the size of the gossip are not significant factors, only speeding the convergence slightly.
+The most important factor in predicting cooperator success is the range of the gossip.
+
+To check the effectiveness and robustness of our model against environmental harshness we will rerun the simulation from first subsection of the results (baseline model) and plot agent type saturations across various $S$ (sucker's payoff).
+
+To test the gossip at the extreme, we will use memory size of 1, gossip size of 1 and gossip range of 3.
+We will run the simulation for 250 and 1000 steps.
+The final agent type saturations are plotted in Figure \ref{fig:agent_sat/S_final}.
+
+\begin{figure}[!h]
+  \centering
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&S-memory1_gossip1_range3_250steps_large.pdf}
+  }
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&S-memory1_gossip1_range3_1000steps_large.pdf}
+  }
+  \caption{Agent type saturation for various $S$ (sucker's payoff) after 250 and 1000 steps, memory size 1, gossip size 1, gossip range 3; SD of 30 simulation runs, outliers removed}
+  \label{fig:agent_sat/S_final}
+\end{figure}
+
+We again fix $S = -1.5$ and vary the cost of living $0.0 \leq k \leq 3.5$ instead.
+In Figure \ref{fig:agent_sat/k_final} we plot the achieved saturations.
+With $3.0 \leq k$, which means $R \leq k$, we see that all agents go extinct.
+Another interesting case is $k = 0.0$, meaning no cost of living is imposed on the agents,
+there is no counter pressure on the defectors, so they are able to survive; cooperators also manage to reach and sustain fully saturated population.
+For all values between these extremes the gossip model (with range 3) enforces cooperator-only population.
+
+\begin{figure}[!h]
+  \centering
+  \makebox[\textwidth]{
+    \includegraphics[width=\paperwidth-4cm]{saturation&living_cost-memory1_gossip1_range3_1000steps_large.pdf}
+  }
+  \caption{Agent type saturation for various $k$ (cost of living) after 1000 steps, memory size 1, gossip size 1, gossip range 3; SD of 30 simulation runs, outliers removed}
+  \label{fig:agent_sat/k_final}
+\end{figure}
 
 
 \subsection{Spatial patterns}
-\todo{characteristic patterns}
+\todo{
+  present the characteristic patterns formed by agents:
+  1. baseline model
+  2. memory 1 gossip 1 range 3 (final)
+  100, 200 steps
+}
 
 
 
@@ -377,8 +465,11 @@ The effect of various memory sizes on the agent type saturations are shown in Fi
 % Provide a reflection on what has been concluded and how this was done.
 % Then give a further possible explanation of results.
 
-% You may give this section another name, or merge it with the one before or the one hereafter.
-\todo{write discussion: compare with the human reputation experiment}
+\todo{conclusion on memory effect : both live well, cooperators have an edge and are faster to saturate}
+
+\todo{conclusion on gossip effect : cooperation flourishes, compare to the human experiment}
+
+\todo{gossip model is robust against environmental harshness}
 
 
 
@@ -406,19 +497,35 @@ We hope others will appreciate this by building upon our research and uncovering
 
 
 
-\section{Conclusions and Future Work}
+\section{Conclusion}
 % ideally, this section can stand on its own: it should be readable without having read the earlier sections.
 \todo{summary intro}
 
-\subsection{Our conclusions}
 % Summarize the research question(s) and the answers to the research question(s).
 % Make statements.
 % Highlight interesting elements.
 \todo{conclude}
 
-\subsection{Future work}
-% Discuss open issues, possible improvements, and new questions that arise from this work; formulate recommendations for further research.
-\todo{outline future work: noise, more complex agents, probabilistic strategies}
+
+
+\section{Future work}
+Our model and simulation setup was somewhat limited in representing real world conditions.
+We assume all information is transferred with 100\% fidelity - no noise is present, no information is lost, all agents share information willingly and openly with anyone without any limitations. Introduction of noise to this model could alter the results and show other interesting aspects of cooperation.
+
+Next, the size of spatial environment was kept very small because of constrained computation resources. Expanding the grid size would allow for more complex interactions and long-memory effects between the agents.
+It would be interesting to investigate if expanding the grid size alters the results in any meaningful way.
+
+The population of agents we have used was composed of pure cooperators and pure defectors.
+And all agents were sharing information openly with anyone.
+More complex strategies could be defined and perhaps an optimal strategy for behaviour/information sharing could be found.
+
+Agents could be given probabilistic behaviour. Making the classification into cooperator/defector more complex. This would work against the gossip mechanism we used.
+It could be possible that the gossip mechanism would not be advantageous if the agent behaviour was random enough.
+Perhaps even favoring the defectors as the reputation would deter more cooperator-cooperator interactions.
+
+Our simulation setup is available
+\todo{add url}
+for anyone curious to investigate any of these or other effects.
 
 
 
