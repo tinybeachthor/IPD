@@ -19,7 +19,7 @@
 }
 
 % newlines instead of indent for paragraphs
-\usepackage[parfill]{parskip}
+\usepackage[parfill,skip=\baselineskip]{parskip}
 % tables
 \usepackage{multirow}
 
@@ -133,15 +133,6 @@ To explore the effects of local reputation, built up via openly gossiping with n
 we will use a computer simulation of a multi-agent spatial environment.
 We will base the simulation on the design of \citet{smaldino}.
 
-The model consists of a spatial environment:
-square grid with torus (wrapping) bounds,
-each cell can be occupied by a single agent.
-This is a discreet time model;
-at each time step, every agent takes a single turn.
-The order in which agents take their turn is randomized in each time step.
-Agent's turn is defined by the finite state diagram shown in Figure \ref{fig:agent_behaviour}.
-The agents pay a fixed cost to survive ($k = 0.5$) to the next round (agents who deplete their energy die and are removed from the simulation), and try to reproduce once they accumulate enough energy via positive interactions with other agents: PD game wins.
-
 \begin{figure}[h]
   \centering
   \begin{tikzpicture}
@@ -171,6 +162,15 @@ The agents pay a fixed cost to survive ($k = 0.5$) to the next round (agents who
   \caption{Agent behaviour diagram, derivation of \citationneeded}
   \label{fig:agent_behaviour}
 \end{figure}
+
+The model consists of a spatial environment:
+square grid with torus (wrapping) bounds,
+each cell can be occupied by a single agent.
+This is a discreet time model;
+at each time step, every agent takes a single turn.
+The order in which agents take their turn is randomized in each time step.
+Agent's turn is defined by the finite state diagram shown in Figure \ref{fig:agent_behaviour}.
+The agents pay a fixed cost to survive ($k = 0.5$) to the next round (agents who deplete their energy die and are removed from the simulation), and try to reproduce once they accumulate enough energy via positive interactions with other agents: PD game wins.
 
 Every agent can play at most a single PD game in each time step.
 Plating a game in the time step is not guaranteed and depends on the spatial configuration of agents, order in which the agents are scheduled, and randomness in choosing an opponent from agent's neighbors.
@@ -465,9 +465,9 @@ For all values between these extremes the gossip model (with range 3) enforces c
 % Provide a reflection on what has been concluded and how this was done.
 % Then give a further possible explanation of results.
 
-\todo{conclusion on memory effect : both live well, cooperators have an edge and are faster to saturate}
+\todo{memory effect : both live well, cooperators have an edge and are faster to saturate}
 
-\todo{conclusion on gossip effect : cooperation flourishes, compare to the human experiment}
+\todo{gossip effect : cooperation flourishes, compare to the human experiment}
 
 \todo{gossip model is robust against environmental harshness}
 
@@ -499,12 +499,39 @@ We hope others will appreciate this by building upon our research and uncovering
 
 \section{Conclusion}
 % ideally, this section can stand on its own: it should be readable without having read the earlier sections.
-\todo{summary intro}
+In this paper, we wanted to investigate the efficacy of gossip in disseminating local reputation, promoting and sustaining cooperation in a population of rational selfish agents acting independently.
+
+Cooperation is single best advantage humans have over other species.
+It is shown over and over again that cooperating individuals can achieve extraordinary results and reap astronomical rewards.
+Yet, the conditions necessary and sufficient for cooperation to emerge and sustain itself are not well known or understood.
+We find it important to investigate what makes cooperation the preferred strategy and how to promote it in diverse populations.
+
+We have built a computer simulation of a multi-agent spatial environment.
+The main agent interaction was modelled using a Prisoner's Dilemma exchange game. This is a well understood game with lots of game theory research shedding light on its various interactions.
+
+We have based our model on the work of \citet{smaldino}, with a couple of changes to better fit our goal.
+Namely, we have decreased the grid size to keep the simulation times reasonably low.
+This has led us to change the PD game reward $S$ (sucker's payoff) to compensate for the smaller amount of agents in the new model.
+
+We have expanded the model with memory; each agent can remember a fixed number of past defectors and choose to abstain from playing games with them, thus protecting itself against being exploited.
+
+Next, we have allowed the agents to communicate. Before playing a game with a nearby opponent, an agent can ask all agents in a range if they remember the opponent as a defector. If they do, the agent will abstain from playing the game with the opponent.
+Thus a single defection can be punished by being effectively barred from all future interactions with other agents.
+This ostracization quickly leads to death, since agents can't survive without a steady stream of profits from the PD game.
 
 % Summarize the research question(s) and the answers to the research question(s).
 % Make statements.
 % Highlight interesting elements.
-\todo{conclude}
+We found that adding memory to the model made cooperators fully saturate the population limit quickly, but the defectors would catch up shortly afterwards.
+Increasing memory size beyond one brought only marginal benefits in increasing the saturation speed.
+
+By allowing agents to gossip openly, cooperators were able to avoid exploitation. Defectors die out quickly.
+The amount of gossip information was not an important factor, again only bringing a negligible increase in the saturation speed.
+
+The most important factor was the range at which the gossip could be exchanged.
+If the gossip can move faster than agents, cooperation will flourish.
+Otherwise defectors can reach full population saturation.
+From what we find, the best way to ensure cooperation (and survival of population) is to keep your enemies close and be loud about it. The louder the better.
 
 
 
