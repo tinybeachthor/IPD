@@ -66,6 +66,8 @@ We expand the model by allowing agent to remember a fixed number of past defecto
 Agent will be allowed to communicate by openly announcing remembered defectors, warning nearby agents.
 This way local reputation of each agent is created.
 We measure how well our model sustains cooperation and how robust it is against environmental harshness.
+The conclusion we reach is that local reputation works excellent in sustaining cooperation and punishing defection.
+The length of agent memory and amount of gossip are not important factors, only the range of gossip has to be greater than the agent movement speed.
 
 \end{abstract}
 
@@ -114,6 +116,7 @@ We close the paper with a short reflection on the ethical aspects and the reprod
 We aim to measure the effectiveness of local reputation in enforcing cooperation.
 To do this we will build a computer simulation of a spatial multi-agent environment.
 We will use a Spatial Iterated Prisoner's Dilemma as the principal exchange game for modelling agent interactions.
+We hypothesize that local reputation will drive the simulation towards a cooperator-only population and will be able to sustain it indefinitely.
 
 In this section we define the goals of this paper explicitly,
 explain the design of the model and simulations,
@@ -222,7 +225,7 @@ This choice for the parameter will ensure that, if we reach cooperation, it was 
 and not because of random interactions in the model.
 
 Environmental harshness of the model is defined by
-the sucker's payoff $P$ (social harshness)
+the sucker's payoff $S$ (social harshness)
 and cost to survive $k$ (external harshness).
 We will investigate the effect of varying these parameters on our results
 and check the effectiveness of gossip across environments of various harshness.
@@ -270,8 +273,7 @@ and the cooperator frequency changes to 33.3\%.
 Using the saturations explain what happened more clearly at the cost of having to present 2 complementary charts for each measurement:
 one for cooperator and one for defector saturation.
 
-Measuring both, the cooperator and the defector saturation might seem redundant at first.
-However, the relationship between them is highly nonlinear and depends on many factors
+Measuring both the cooperator and the defector saturation might seem redundant at first, however, their relationship is highly nonlinear and depends on many factors
 as will be shown in the results section.
 
 All simulations will be run 30 times for each parameter combination and we will plot the standard deviations of the results.
@@ -313,8 +315,8 @@ starting energy will be randomly chosen for each agent to be between 1 and 49 (i
 energy cost to reproduce is 50 (agent has to accumulate at least 100 energy and reproduces by transferring 50 to the offspring),
 and the maximum energy an agent can hold is 150.
 
-For the PD game payoffs we will use $R = 3$, $T = 5$, $S = -1.5$, and $P = 0$.
-And the living cost $k = 0.5$.
+For the PD game payoffs we will use $R = 3$, $T = 5$, $S = -1.5$, $P = 0$,
+and for the living cost $k = 0.5$.
 These values were shown to lead to the cooperators struggling to survive
 and maintain their numbers \citep{smaldino}.
 
@@ -457,12 +459,7 @@ For all values between these extremes the gossip model (with range 3) enforces c
 
 
 \subsection{Spatial patterns}
-\todo{
-  present the characteristic patterns formed by agents:
-  1. baseline model
-  2. memory 1 gossip 1 range 3 (final)
-  100, 200 steps
-}
+
 \begin{figure}[!h]
   \centering
   Memory size 0 - Gossip size 0 - Gossip range 0
@@ -486,6 +483,8 @@ For all values between these extremes the gossip model (with range 3) enforces c
   \caption{Spatial patterns formed by agents after simulating for 500 steps, defectors are red, cooperators are green}
   \label{fig:spatial}
 \end{figure}
+
+\todo{present the characteristic patterns formed by agents}
 
 
 
@@ -511,9 +510,9 @@ and can be reproduced by others, to provide a solid foundation for others to rep
 % Reflect on the ethical aspects of your research and discuss the reproducibility of your methods.
 \subsection{Ethical aspects}
 This paper focused on exploring the effects of reputation on promoting and sustaining cooperation.
-We believe this research is ethically good and our conscience is clean about the methods used and conclusions reach, as well as all other aspects of this paper.
+We believe this research is ethically good and our conscience is clean about the methods used and conclusions reached; as well as all other aspects of this paper.
 
-While we cannot ensure the findings of this paper will not be misused by others. We implore all reader's to always strive for the highest ethical ideals.
+While we cannot ensure the findings of this paper will not be misused by others, we implore all readers to always strive for the highest ethical ideals.
 Let's all be excellent.
 
 \subsection{Reproducibility}
