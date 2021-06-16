@@ -62,8 +62,9 @@
 
 Under what conditions can cooperation emerge and how can we sustain it?
 We build a computer simulation of a multi-agent spatial environment using Prisoner's Dilemma as the principal agent interaction.
-We expand the model by allowing agent to remember a fixed number of past defectors and to choose to abstain from interacting with them again.
-Agent will be allowed to communicate by openly announcing remembered defectors, warning nearby agents.
+We expand the model by allowing agents to remember a fixed number of past defectors
+and abstain from interacting with them again.
+Agents will be allowed to communicate by openly announcing remembered defectors, warning nearby agents.
 This way local reputation of each agent is created.
 We measure how well our model sustains cooperation and how robust it is against environmental harshness.
 The conclusion we reach is that local reputation works excellent in sustaining cooperation and punishing defection.
@@ -102,10 +103,10 @@ As shown by \citet{noise}, not all strategies that perform well in noise-less en
 Using external infrastructure for passing information also meant that the transmission speed was uniform for all participants receiving all necessary information in time for their next round of the game.
 These are non-trivial idealizations: relaxing them would yield a model closer to real-world systems and could change the results drastically.
 
-In this paper we look at if and how well a local reputation system sustains cooperation and under what conditions does it yield optimal results.
+In this paper we aim to find out if, and how well, can local reputation sustain cooperation and under what parameters does it yield optimal results.
 We evaluate the approach under various gossip range and memory length; and comment on the effectiveness of local reputation in enforcing cooperation in spatial prisoner's dilemma.
 
-This was the introduction of the paper, with a short background, motivation, and explanation of the goals of this paper.
+This is the end of the introduction of the paper; composed of a short background, motivation, and explanation of the goals of this paper.
 In the next section we define the goals explicitly and show the methodology we will use for this research.
 Afterwards we show the results with short impartial explanations, followed by discussion of the implications of the results we obtained;
 we also connect our results with similar research and comment on the findings.
@@ -114,7 +115,7 @@ We close the paper with a short reflection on the ethical aspects and the reprod
 
 \section{Methodology}
 We aim to measure the effectiveness of local reputation in enforcing cooperation.
-To do this we will build a computer simulation of a spatial multi-agent environment.
+To do this we will build a computer simulation of a multi-agent spatial environment.
 We will use a Spatial Iterated Prisoner's Dilemma as the principal exchange game for modelling agent interactions.
 We hypothesize that local reputation will drive the simulation towards a cooperator-only population and will be able to sustain it indefinitely.
 
@@ -130,7 +131,7 @@ This is a good choice for modelling behaviour of rational and selfish actors.
 And will allow us to observe the conditions necessary for cooperation to emerge in the population as well as what makes it sustain itself.
 
 The agents will live in a spatial environment and act independently;
-the only mutual interactions will be playing the game with a neighbor and exchanging gossip with nearby agents.
+the only mutual interactions will be playing the PD game with a neighbor and exchanging gossip with nearby agents.
 We will vary the range at which the gossip can be exchanges as well as the amount of information which can be included in as single gossip message.
 We want to determine the effectiveness of the gossip mechanism in promoting and sustaining cooperation.
 
@@ -168,7 +169,7 @@ We will base the simulation on the design of \citet{smaldino}.
       (energy) edge[below] node{Yes} (die)
       ;
   \end{tikzpicture}
-  \caption{Agent behaviour diagram, derivation of \citationneeded}
+  \caption{Agent behaviour diagram: showing the decision flow of an agent's single turn}
   \label{fig:agent_behaviour}
 \end{figure}
 
@@ -179,14 +180,14 @@ This is a discreet time model;
 at each time step, every agent takes a single turn.
 The order in which agents take their turn is randomized in each time step.
 Agent's turn is defined by the finite state diagram shown in Figure \ref{fig:agent_behaviour}.
-The agents pay a fixed cost to survive ($k = 0.5$) to the next round (agents who deplete their energy die and are removed from the simulation), and try to reproduce once they accumulate enough energy via positive interactions with other agents: PD game wins.
+The agents pay a fixed cost to survive ($k = 0.5$) to the next round (agents who deplete their energy die and are removed from the simulation), and try to reproduce once they accumulate enough energy via positive interactions with other agents - PD game wins.
 
 Every agent can play at most a single PD game in each time step.
 Plating a game in the time step is not guaranteed and depends on the spatial configuration of agents, order in which the agents are scheduled, and randomness in choosing an opponent from agent's neighbors.
 Similarly, when no opponent is found, movement only happens if an empty cell is found nearby; if there is more than one empty cell, one is chosen randomly.
 
 Agents reproduce by creating a new agent with the same parameters as themselves in an empty neighborhood cell (chosen randomly if more than one, no reproduction if there are no empty cells in the neighborhood).
-Reproduction is only attempted if the agent has accumulated at least twice the amount of energy as is the cost of reproduction.
+Reproduction is only attempted if the agent has accumulated enough energy: at least twice the amount of the cost of reproduction.
 The cost of reproduction is then subtracted from the parent and the offspring is birthed with this energy level.
 The cost of reproduction is effectively transferred from the parent to the offspring;
 reproducing does not change the net amount of energy in the model.
@@ -225,14 +226,14 @@ This choice for the parameter will ensure that, if we reach cooperation, it was 
 and not because of random interactions in the model.
 
 Environmental harshness of the model is defined by
-the sucker's payoff $S$ (social harshness)
-and cost to survive $k$ (external harshness).
+the sucker's payoff $S$ (social harshness) and
+the cost to survive $k$ (external harshness).
 We will investigate the effect of varying these parameters on our results
-and check the effectiveness of gossip across environments of various harshness.
+and check the robustness of gossip in promoting cooperation across environments of various harshness.
 
 To better suit our needs we will introduce some changes to the original model.
 We will reduce the spatial grid size from 100x100, as in the original design, to a more manageable 20x20.
-This will allow us to run more simulations with more complex agent behaviour in a manageable time.
+This will allow us to run more simulations with more complex agent behaviour in a reasonable amount of time.
 We will also decrease the starting number of agents from 1600 to 64: keeping the same percentage of 16\% of the total grid size occupied as in the original model.
 
 This reduction of the environment size (by a factor of 25!) has the effect of significantly increasing the chance of a total extinction of all agents:
@@ -253,7 +254,8 @@ The simulation will be implemented in Python using the Mesa\footnote{\url{https:
 \subsection{Simulation Evaluation}
 
 To determine the effectives of gossip in promoting cooperation, we will observe the rate of convergence to a population of cooperators, stopping the simulation once stable equilibrium is achieved.
-To verify that this is indeed an equilibrium by letting the simulation run longer and checking that the general behaviour does not change.
+To verify that this is indeed an equilibrium, we let the simulation run longer and check that the general behaviour does not change after some point:
+we assume that if the behaviour of the simulation only varied in the first 5\% of the  simulation and then remained unchanged, it has converged.
 We will also observe the maximal population size of defectors which can sustain itself alongside the cooperators.
 
 The main properties measured about the model will be the saturation of cooperator and defector populations.
@@ -269,12 +271,9 @@ Consider the case of 10 defector and 10 cooperator with maximal carrying capacit
 saturation is 50\% for both agent types, and cooperator frequency is also 50\%.
 Now 10 more cooperators are born:
 defector saturation stays at 50\%, cooperator saturation increases to 100\%,
-and the cooperator frequency changes to 33.3\%.
-Using the saturations explain what happened more clearly at the cost of having to present 2 complementary charts for each measurement:
+but the cooperator frequency is now at 33.3\%.
+Using the saturations explains what happened more clearly, at the cost of having to present 2 complementary charts for each measurement:
 one for cooperator and one for defector saturation.
-
-Measuring both the cooperator and the defector saturation might seem redundant at first, however, their relationship is highly nonlinear and depends on many factors
-as will be shown in the results section.
 
 All simulations will be run 30 times for each parameter combination and we will plot the standard deviations of the results.
 We will drop the 2 most extreme outliers, both positive and negative, from the plots; this allows us to show the actual behaviour of the model, devoid of unusual probabilistic anomalies.
@@ -283,22 +282,22 @@ To ensure integrity of the results, we check the outliers removed and investigat
 We will also record characteristic patterns formed by the populations as influenced by different parameters.
 We do this, because it was shown by earlier work \citep{spatial-patterns} that in Spatial Prisoner's Dilemma interesting patterns can emerge over time.
 These patterns are very similar to patterns occurring in nature, which are often created by reaction-diffusion processes.
-This suggests a deeper link between our model and natural processes.
+This suggests a deeper link between our model and biological activity.
 
 
 
 \section{Results}
 Now we present the results of our simulation
-with commentary on the setup and meaning of the results.
+with commentary on the setup and the meaning of the results.
 We show the results impartially and let the data do most of the talking.
 A thorough explanation of the data in the context of similar research
 with explanation of wider implications will be in the next section.
 
-We start by presenting the behaviour of the plain (baseline) model in the first subsection,
+We start by presenting the behaviour of the baseline (no memory, no gossip) model in the first subsection,
 then we expand it by adding memory and show how this alters the results obtained,
 afterwards we enable communication (gossip) between agents and rerun the simulations once again.
 
-After making the comparisons between the behaviour as influenced by various extensions we look a closer look at the robustness of the gossip model against environmental harshness: both social (sucker's payoff $S$) and external (cost of living $k$).
+After making the comparisons between the behaviour as influenced by various extensions we take a closer look at the robustness of the gossip model against environmental harshness: both social (sucker's payoff $S$) and external (cost of living $k$).
 
 We wrap this section by comparing the characteristic spatial patterns of the models.
 
@@ -309,16 +308,16 @@ This is a replication of \citet{smaldino}; with some alterations.
 As explained in the model design subsection, we modify the original model slightly.
 We decrease the size of the grid from 100x100 to 20x20,
 and decrease the starting agent count from 1600 to 64.
-We will keep torus (wrapping) bounds, as in the original paper.
-We will also keep some other parameters:
+We will keep the following parameters unchanged:
 starting energy will be randomly chosen for each agent to be between 1 and 49 (inclusive),
 energy cost to reproduce is 50 (agent has to accumulate at least 100 energy and reproduces by transferring 50 to the offspring),
 and the maximum energy an agent can hold is 150.
 
-For the PD game payoffs we will use $R = 3$, $T = 5$, $S = -1.5$, $P = 0$,
+For the PD game payoffs we will use $R = 3$, $T = 5$, $P = 0$,
 and for the living cost $k = 0.5$.
 These values were shown to lead to the cooperators struggling to survive
 and maintain their numbers \citep{smaldino}.
+We will determine the value for $S$ (sucker's payoff) from the simulations.
 
 Unless otherwise noted, we will use these parameters for all simulation runs.
 
@@ -343,14 +342,12 @@ Unless otherwise noted, we will use these parameters for all simulation runs.
 We begin by exploring the robustness of the model against social harshness - represented by the $S$ (sucker's payoff) parameter.
 In Figure \ref{fig:agent_sat/S-memory0gossip0} we present the results of running the simulation for $2.5 \leq S \leq 0.0$.
 We observe that $S = -1.5$ leads to total extinction in the model by step 500;
-we will use this value for the parameter for further simulations to determine the effectiveness of memory and the gossip mechanism in promoting and sustaining cooperation.
+we will use this value for the parameter for further simulations to determine the effectiveness of memory and the gossip mechanism at promoting and sustaining cooperation.
+
+We will use $S = -1.5$ from now on, unless otherwise noted.
 
 
 \subsection{Remember defectors}
-We have determined the value of for the parameter $S = -1.5$ which repeatably leads to extinction of the whole population by step 500.
-
-Now we expand the model by allowing agents to remember some fixed number of most recent defectors encountered. We will examine how varying the number of defectors which can be remembered (memory size) influences the cooperator and defector saturations.
-
 \begin{figure}[!ht]
   \centering
   \makebox[\textwidth]{
@@ -369,12 +366,14 @@ Now we expand the model by allowing agents to remember some fixed number of most
   \label{fig:agent_sat/memory_size}
 \end{figure}
 
+Now we expand the model by allowing agents to remember some fixed number of most recent defectors encountered. We will examine how varying the number of defectors which can be remembered (memory size) influences the cooperator and defector saturations.
+
 The effect of various memory sizes on the agent type saturations are shown in Figure \ref{fig:agent_sat/memory_size}.
 Allowing agents to remember defector increases convergence speed to saturated population.
 Cooperators benefit from this more as they saturate faster.
 After cooperators reach full saturations, defectors start to reproduce faster and soon catch up with cooperators, reaching full population saturation.
 
-Increasing the memory size has only a small effect on decreasing cooperator saturation time and increasing defector saturation time.
+Increasing the memory size has only a small effect on speeding up convergence to population saturation for cooperators and slowing it down for defectors.
 This is a desired effect, however, it is very minute and is not worth the extra trouble of managing a large queue-based memory.
 In the long run, memory size beyond one does not provide additional benefits.
 
@@ -417,15 +416,15 @@ We run the simulation for 200 and 1000 steps and plot the agent type saturations
   \label{fig:agent_sat/gossip_size_step1000}
 \end{figure}
 
-
-\subsection{Robustness of the gossip}
 We have found that the introduction of gossip is a strong deterrent of defection and leads to cooperator-only populations quickly.
 The size of the memory and the size of the gossip are not significant factors, only speeding the convergence slightly.
 The most important factor in predicting cooperator success is the range of the gossip.
 
+
+\subsection{Robustness of the gossip}
 To check the effectiveness and robustness of our model against environmental harshness we will rerun the simulation from first subsection of the results (baseline model) and plot agent type saturations across various $S$ (sucker's payoff).
 
-To test the gossip at the extreme, we will use memory size of 1, gossip size of 1 and gossip range of 3.
+To test the gossip model at the extreme, we will use memory size of 1, gossip size of 1 and gossip range of 3.
 We will run the simulation for 250 and 1000 steps.
 The final agent type saturations are plotted in Figure \ref{fig:agent_sat/S_final}.
 
@@ -518,7 +517,8 @@ We show 3 patterns formed after simulating for 500 steps for each of the followi
 \section{Responsible Research}
 We recognize the inherent difficulties in conducting ethical and sustainable research.
 We take the following actions to ensure this paper is ethically good
-and can be reproduced by others, to provide a solid foundation for others to reproduce, reuse, and build upon this paper.
+and can be reproduced by others.
+We aim to provide a solid foundation for others to reproduce, reuse, and build upon this paper.
 
 % Reflect on the ethical aspects of your research and discuss the reproducibility of your methods.
 \subsection{Ethical aspects}
@@ -534,7 +534,7 @@ We want to make this paper a good foundation for future work and as such we prov
 Next, we use Nix Flake\footnote{\url{https://nixos.wiki/wiki/Flakes}} to capture the exact versions of all software, libraries, and packages used for this research \citep{nix}. All of this is captured together in and provided as a fully reproducible environment.
 We hope that by doing this it becomes easy to reproduce our results and provide a good foundation environment for other researchers to quickly kick-start their research.
 
-Our model itself is implemented in a Jupyter Notebook\footnote{\url{https://jupyter.org/}} and care was taken to keep the total amount of dependencies as low as possible and to stick to the most standard dependencies whenever possible.
+Our model itself is implemented in a Jupyter Notebook\footnote{\url{https://jupyter.org/}} and care was taken to keep the total amount of dependencies as low as possible and to stick to the most standard dependencies wherever possible.
 We hope others will appreciate this by building upon our research and uncovering wonderful conclusions.
 
 
@@ -543,8 +543,8 @@ We hope others will appreciate this by building upon our research and uncovering
 % ideally, this section can stand on its own: it should be readable without having read the earlier sections.
 In this paper, we wanted to investigate the efficacy of gossip in disseminating local reputation, promoting and sustaining cooperation in a population of rational selfish agents acting independently.
 
-Cooperation is single best advantage humans have over other species.
-It is shown over and over again that cooperating individuals can achieve extraordinary results and reap astronomical rewards.
+Cooperation is the single best advantage humans have over other species;
+it is shown over and over again that cooperating individuals can achieve extraordinary results and reap astronomical rewards.
 Yet, the conditions necessary and sufficient for cooperation to emerge and sustain itself are not well known or understood.
 We find it important to investigate what makes cooperation the preferred strategy and how to promote it in diverse populations.
 
@@ -555,7 +555,7 @@ We have based our model on the work of \citet{smaldino}, with a couple of change
 Namely, we have decreased the grid size to keep the simulation times reasonably low.
 This has led us to change the PD game reward $S$ (sucker's payoff) to compensate for the smaller amount of agents in the new model.
 
-We have expanded the model with memory; each agent can remember a fixed number of past defectors and choose to abstain from playing games with them, thus protecting itself against being exploited.
+We have expanded the model with memory; each agent can remember a fixed number of past defectors and choose to abstain from playing games with them, thus protecting itself against being exploited repeatedly.
 
 Next, we have allowed the agents to communicate. Before playing a game with a nearby opponent, an agent can ask all agents in a range if they remember the opponent as a defector. If they do, the agent will abstain from playing the game with the opponent.
 Thus a single defection can be punished by being effectively barred from all future interactions with other agents.
@@ -578,7 +578,7 @@ From what we find, the best way to ensure cooperation (and survival of populatio
 
 
 \section{Future work}
-Our model and simulation setup was somewhat limited in representing real world conditions.
+Our model and simulation setup was limited in representing real world conditions.
 We assume all information is transferred with 100\% fidelity - no noise is present, no information is lost, all agents share information willingly and openly with anyone without any limitations. Introduction of noise to this model could alter the results and show other interesting aspects of cooperation.
 
 Next, the size of spatial environment was kept very small because of constrained computation resources. Expanding the grid size would allow for more complex interactions and long-memory effects between the agents.
