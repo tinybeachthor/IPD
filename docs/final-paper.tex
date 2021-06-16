@@ -33,13 +33,13 @@
 \makeatother
 \usepackage{babel}
 
-% work in progress packages
-\newcommand{\citationneeded}{\textsuperscript{\color{blue} [citation needed]}}
-\usepackage{easy-todo}
+% % work in progress packages
+% \newcommand{\citationneeded}{\textsuperscript{\color{blue} [citation needed]}}
+% \usepackage{easy-todo}
 
 \begin{document}
 
-\listoftodos
+% \listoftodos
 
 \title{Keep your enemies closer and be loud about it}
 \author{
@@ -459,25 +459,25 @@ For all values between these extremes the gossip model (with range 3) enforces c
 
 \subsection{Spatial patterns}
 
-\begin{figure}[!h]
+\begin{figure}[!hb]
   \centering
   \textbf{Baseline:} Memory size 0 - Gossip size 0 - Gossip range 0
   \makebox[\textwidth]{
-    \includegraphics[width=\textwidth/3]{spatial-memory0+gossip0+range0.pdf}
-    \includegraphics[width=\textwidth/3]{spatial-memory0+gossip0+range0-B.pdf}
-    \includegraphics[width=\textwidth/3]{spatial-memory0+gossip0+range0-C.pdf}
+    \includegraphics[width=\textwidth/4]{spatial-memory0+gossip0+range0.pdf}
+    \includegraphics[width=\textwidth/4]{spatial-memory0+gossip0+range0-B.pdf}
+    \includegraphics[width=\textwidth/4]{spatial-memory0+gossip0+range0-C.pdf}
   }
   \textbf{Memory-5:} Memory size 5 - Gossip size 0 - Gossip range 0
   \makebox[\textwidth]{
-    \includegraphics[width=\textwidth/3]{spatial-memory5+gossip0+range0-A.pdf}
-    \includegraphics[width=\textwidth/3]{spatial-memory5+gossip0+range0-B.pdf}
-    \includegraphics[width=\textwidth/3]{spatial-memory5+gossip0+range0-C.pdf}
+    \includegraphics[width=\textwidth/4]{spatial-memory5+gossip0+range0-A.pdf}
+    \includegraphics[width=\textwidth/4]{spatial-memory5+gossip0+range0-B.pdf}
+    \includegraphics[width=\textwidth/4]{spatial-memory5+gossip0+range0-C.pdf}
   }
   \textbf{Final:} Memory size 1 - Gossip size 1 - Gossip range 3
   \makebox[\textwidth]{
-    \includegraphics[width=\textwidth/3]{spatial-memory1+gossip1+range3-A.pdf}
-    \includegraphics[width=\textwidth/3]{spatial-memory1+gossip1+range3-B.pdf}
-    \includegraphics[width=\textwidth/3]{spatial-memory1+gossip1+range3-C.pdf}
+    \includegraphics[width=\textwidth/4]{spatial-memory1+gossip1+range3-A.pdf}
+    \includegraphics[width=\textwidth/4]{spatial-memory1+gossip1+range3-B.pdf}
+    \includegraphics[width=\textwidth/4]{spatial-memory1+gossip1+range3-C.pdf}
   }
   \caption{Spatial patterns formed by agents after simulating for 500 steps, defectors are red, cooperators are green}
   \label{fig:spatial}
@@ -506,11 +506,29 @@ We show 3 patterns formed after simulating for 500 steps for each of the followi
 % Provide a reflection on what has been concluded and how this was done.
 % Then give a further possible explanation of results.
 
-\todo{memory effect : both live well, cooperators have an edge and are faster to saturate}
+Looking back at the results we collected in the previous section;
+now we present a more in-depth commentary on their meaning and
+put them in a wider context.
 
-\todo{gossip effect : cooperation flourishes, compare to the human experiment}
+We have seen that the baseline model act as expected and leads to total extinction quickly.
+This is consistent with the behaviour observed by \citet{smaldino}.
+Agents can prolong their existence if the cooperators are able to form a cluster,
+but there is no escaping eventual extinction.
 
-\todo{gossip model is robust against environmental harshness}
+By extending the model with memory, we are able to sustain the population.
+Both cooperators and defectors profit from this equally, with cooperators having a slight edge
+as memory size increases - although this is almost negligible.
+In the spatial patterns for the memory-5 model we see more fragmentation: this is because cooperator can survive next to defectors by remembering them.
+
+From \citet{simple-reputation, public-private-monitoring} we know that reputation systems promote cooperation.
+We wanted to see if local reputation system suffices: we let agents communicate what they remember to nearby agents.
+This works very well, we can consistently achieve cooperator-only population quickly.
+The amount of the information included in the gossip is not very important, the main parameter is the range of the gossip. By increasing it we can converge to cooperation faster.
+
+Last we looked at the robustness of the local reputation model against environmental harshness.
+We found it to be absolutely independent of the environmental parameters.
+The gossip mechanism is too strong to be influenced by environmental effects.
+We conclude by certifying the efficacy of the local reputation, confirming our hypotheses.
 
 
 
