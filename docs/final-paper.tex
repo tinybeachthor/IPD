@@ -84,41 +84,63 @@ To study the conditions necessary for cooperation to flourish we need a suitable
 In 1950, Albert Tucker named a two-player exchange game
 \say{the Prisoner's Dilemma} to attract more research interest \citep{sep-prisoner-dilemma}.
 This game elegantly captures the difficulty of the decision between cooperation and defection in a single choice.
-Despite being so simple compared to the complexity of the problem it is representing, it was used to model many aspects of behaviour in systems of selfish individuals; and, according to \citet{Axelrod84}, for \say{discovery of the precise conditions that are necessary and sufficient for cooperation to emerge}.
+Despite being so simple compared to the complexity of the problem it is representing,
+it was used to model many aspects of behaviour in systems of selfish individuals;
+and, according to \citet{Axelrod84}, for \say{discovery of the precise conditions that are necessary and sufficient for cooperation to emerge}.
 
 % iterated version + the dilemma
-In the case of a one-off exchange, there being no opportunity for a follow-up punishment, the rational behaviour is defection. (This extends to all rounds for a fixed-length game, inductively \citep{Axelrod84}.)
-The interesting behaviour arises if there is no end; or, at least, if there is no way for the participants of the game to know when the game ends or even if there is an end.
+In the case of a one-off exchange, there being no opportunity for a follow-up punishment, the rational behaviour is defection.
+(This extends to all rounds for a fixed-length game, inductively \citep{Axelrod84}.)
+The interesting behaviour arises if there is no end; or, at least,
+if there is no way for the participants of the game to know when the game ends or even if there is an end.
 % reputation importance
 An agents has to expect that even a single defection can be infinitely punished by never again being cooperated with \citep{GRIM}.
 Such a risk may just not be worth it.
 
-% global reputation system
-The defectors can, naturally, only be punished if they can be identified and known to others. This is why services like Ebay or Airbnb have a rating system in place.
-Presence of a reputation system strongly boosts cooperation, as shown by \citet{simple-reputation, public-private-monitoring}.
-These studies used groups of volunteers as game participants and explored the effects of various information being public --- from only the latest move of the current opponent, to full histories of all moves taken by every participant.
-
-% decentralizing reputation: keeping track internally?
-Using human subjects as game participants limited the research to relatively small groups with few rounds; they also used external infrastructure for information passing: eliminating noise, delays, and deliberately wrong information.
-As shown by \citet{noise}, not all strategies that perform well in noise-less environments can do so under the presence of noise.
-
-Using external infrastructure for passing information also meant that the transmission speed was uniform for all participants receiving all necessary information in time for their next round of the game.
-These are non-trivial idealizations: relaxing them would yield a model closer to real-world systems and could change the results dramatically.
-
-In this paper we aim to find out if, and how well, can local reputation sustain cooperation and under what parameters does it yield optimal results.
-We evaluate the approach under various gossip range and memory length; and comment on the effectiveness of local reputation in enforcing cooperation in spatial prisoner's dilemma.
-
-In the next section we define the goals explicitly and show the methodology we will use for this research.
-Afterwards we show the results with short impartial explanations, followed by discussion of the implications of the results obtained;
-we also connect our results with similar research.
+In the next section we provide a short overview of related work and show gaps in knowledge that we aim to fill.
+Then we define the goals of this paper explicitly and describe the methodology we will use.
+Afterwards we show the results with short impartial explanations,
+followed by discussion of the implications of the results obtained; we also connect our results with similar research.
 We close the paper with a short reflection on the ethical aspects and the reproducibility of this paper,
 after which we summarize and explicitly state our conclusions with some ideas for further research directions.
 
 
+
+\section{Related Work}
+Prisoner's Dilemma is generally used to model agent behaviour when we care about promoting cooperation and all agents are acting selfishly: trying to maximize their personal profit.
+A strong mechanism for enforcing cooperation is a reputation system:
+defectors can only be punished (or avoided) if they can be identified.
+This is why services like Ebay or Airbnb have a rating system in place.
+
+Presence of a reputation system strongly boosts cooperation, as shown by \citet{simple-reputation, dong-reputation}, among others.
+These studies used different approaches to constructing a reputation system.
+All of them observed a significant boost in cooperation levels after introduction of the reputation system, which was to be expected.
+
+In another study, \citet{strangers-gossip} investigated the effects of gossip between PD game participants on the cooperation levels.
+After each round, players would be allowed to exchange some information about other players.
+They observed some increased levels of cooperation in the gossip group when compared to control.  However, the results are inconclusive.
+
+\citet{public-private-monitoring} allowed game participants to report information about their opponents, with various levels of this information then made public to players in the following rounds---ranging from only the latest move of the current opponent, to full histories of all moves taken by every player.
+They suggests that \say{[the efficacy] depends on the quality of platforms that store reported information.}
+
+All of these studies were carried out using human subjects as game participants.
+This made the results difficult to analyze and almost impossible to draw strong conclusions from noisy data.
+These studies also used external infrastructure for information passing: eliminating noise, delays, and deliberately wrong information.
+As shown by \citet{noise}, not all strategies that perform well in noise-less environments can do so under the presence of noise.
+Using external infrastructure for passing information also meant that
+the transmission speed was uniform for all participants receiving all necessary information in time for their next round of the game.
+These are non-trivial idealizations and relaxing them would yield a model closer to real-world systems and could change the results dramatically.
+
+We aim to conclusively find out if, and how well, local reputation---built up via gossip---promotes and sustains cooperation and under what parameters does it yield optimal results.
+We will build a computer simulation for investigating communication between neighbors in a multi-agent spatial environment.
+Using a computer simulation we isolate the communication mechanism from complex human behaviour: humans learn to anticipate and predict behaviour of other players, making it more difficult to isolate and analyze the effects of the communication mechanism.
+We hope to definitely evaluate the effectiveness of local reputation in promoting and sustaining cooperation in Spatial Prisoner’s Dilemma and provide a solid foundation for further research on communication in spatial exchange games.
+
+
+
 \section{Methodology}
-We aim to measure the effectiveness of local reputation in enforcing cooperation.
-To do this we will build a computer simulation of a multi-agent spatial environment.
-We will use a Spatial Iterated Prisoner's Dilemma as the principal exchange game for modelling agent interactions.
+To evaluate the effectiveness of local reputation in enforcing cooperation we will have to first build a computer simulation of a multi-agent spatial environment.
+We will use Spatial Iterated Prisoner's Dilemma as the principal exchange game for modelling agent interactions.
 We hypothesize that local reputation will drive the simulation towards a cooperator--only population and will be able to sustain it indefinitely.
 
 In this section we define the goals of this paper explicitly,
@@ -182,7 +204,7 @@ This is a discreet time model;
 at each time step, every agent takes a single turn.
 The order in which agents take their turn is randomized in each time step.
 Agent's turn is defined by the finite state diagram shown in Figure \ref{fig:agent_behaviour}.
-The agents pay a fixed cost to survive ($k = 0.5$) to the next round (agents who deplete their energy die and are removed from the simulation), and try to reproduce once they accumulate enough energy via positive interactions with other agents --- PD game wins.
+The agents pay a fixed cost to survive ($k = 0.5$) to the next round (agents who deplete their energy die and are removed from the simulation), and try to reproduce once they accumulate enough energy via positive interactions with other agents---PD game wins.
 
 Every agent can play at most a single PD game in each time step.
 Playing a game in a time step is not guaranteed and depends on the spatial configuration of agents, order in which the agents are scheduled, and randomness in choosing an opponent from agent's neighbors.
@@ -347,7 +369,7 @@ Unless otherwise noted, we will use these parameters for all simulation runs.
   \label{fig:agent_sat/S-memory0gossip0}
 \end{figure}
 
-We begin by exploring the robustness of the model against social harshness --- represented by the $S$ (sucker's payoff) parameter.
+We begin by exploring the robustness of the model against social harshness---represented by the $S$ (sucker's payoff) parameter.
 In Figure \ref{fig:agent_sat/S-memory0gossip0} we present the results of running the simulation for $2.5 \leq S \leq 0.0$.
 We observe that $S = -1.5$ leads to total extinction in the model by step 500;
 we will use this value for the parameter for further simulations to determine the effectiveness of memory and the gossip mechanism at promoting and sustaining cooperation.
