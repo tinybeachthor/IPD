@@ -51,7 +51,7 @@
   \\
   n.yorke-smith@tudelft.nl
 }
-\date{20 June 2021}
+\date{25 June 2021}
 \maketitle
 
 
@@ -108,8 +108,8 @@ after which we summarize and explicitly state our conclusions with some ideas fo
 
 \section{Related Work}
 Prisoner's Dilemma is generally used to model agent behaviour when we care about promoting cooperation and all agents are acting selfishly: trying to maximize their personal profit.
-A strong mechanism for enforcing cooperation is a reputation system:
-defectors can only be punished (or avoided) if they can be identified.
+Defectors can only be punished (or avoided) if they can be identified,
+this is the main benefit of a reputation system---providing identity and behaviour history for agents.
 This is why services like Ebay or Airbnb have a rating system in place.
 
 Presence of a reputation system strongly boosts cooperation, as shown by \citet{simple-reputation, dong-reputation}, among others.
@@ -118,15 +118,16 @@ All of them observed a significant boost in cooperation levels after introductio
 
 In another study, \citet{strangers-gossip} investigated the effects of gossip between PD game participants on the cooperation levels.
 After each round, players would be allowed to exchange some information about other players.
-They observed some increased levels of cooperation in the gossip group when compared to control.  However, the results are inconclusive.
+They observed some increased levels of cooperation in the gossip group when compared to the control group, however, the results were inconclusive, mostly because of a small sample size.
 
-\citet{public-private-monitoring} allowed game participants to report information about their opponents, with various levels of this information then made public to players in the following rounds---ranging from only the latest move of the current opponent, to full histories of all moves taken by every player.
-They suggests that \say{[the efficacy] depends on the quality of platforms that store reported information.}
+\citet{public-private-monitoring} allowed game participants to report information about their opponents, with various amounts of this information then made public to players in the following rounds---ranging from only the latest move of the current opponent, to full histories of all moves taken by every player.
+They suggest that \say{[the efficacy] depends on the quality of platforms that store reported information.}
+Analogously, \citet{cooperation-communication} allowed unrestricted but non-binding communication (cheap talk) between agents. The unrestricted communication performed best and boosted the cooperation levels more than when the amount of information to be exchanged was limited.
 
-All of these studies were carried out using human subjects as game participants.
-This made the results difficult to analyze and almost impossible to draw strong conclusions from noisy data.
+All of the studies mentioned above were carried out using human subjects as game participants; the group sizes were also kept relatively small with few rounds.
+This made the results difficult to analyze and almost impossible to draw strong conclusions from noisy the data.
 These studies also used external infrastructure for information passing: eliminating noise, delays, and deliberately wrong information.
-As shown by \citet{noise}, not all strategies that perform well in noise-less environments can do so under the presence of noise.
+As shown by \citet{noise}, not all strategies that perform well in noiseless environments can do so under the presence of noise.
 Using external infrastructure for passing information also meant that
 the transmission speed was uniform for all participants receiving all necessary information in time for their next round of the game.
 These are non-trivial idealizations and relaxing them would yield a model closer to real-world systems and could change the results dramatically.
@@ -134,7 +135,7 @@ These are non-trivial idealizations and relaxing them would yield a model closer
 We aim to conclusively find out if, and how well, local reputation---built up via gossip---promotes and sustains cooperation and under what parameters does it yield optimal results.
 We will build a computer simulation for investigating communication between neighbors in a multi-agent spatial environment.
 Using a computer simulation we isolate the communication mechanism from complex human behaviour: humans learn to anticipate and predict behaviour of other players, making it more difficult to isolate and analyze the effects of the communication mechanism.
-We hope to definitely evaluate the effectiveness of local reputation in promoting and sustaining cooperation in Spatial Prisoner’s Dilemma and provide a solid foundation for further research on communication in spatial exchange games.
+We hope to provide a definitive evaluation of the effectiveness of local reputation in promoting and sustaining cooperation in Spatial Prisoner’s Dilemma and provide a solid foundation for further research on communication in spatial exchange games.
 
 
 
