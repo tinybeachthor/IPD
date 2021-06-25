@@ -122,10 +122,10 @@ They observed some increased levels of cooperation in the gossip group when comp
 
 \citet{public-private-monitoring} allowed game participants to report information about their opponents, with various amounts of this information then made public to players in the following rounds---ranging from only the latest move of the current opponent, to full histories of all moves taken by every player.
 They suggest that \say{[the efficacy] depends on the quality of platforms that store reported information.}
-Analogously, \citet{cooperation-communication} allowed unrestricted but non-binding communication (cheap talk) between agents. The unrestricted communication performed best and boosted the cooperation levels more than when the amount of information to be exchanged was limited.
+Similarly, \citet{cooperation-communication} allowed unrestricted but non-binding communication (cheap talk) between agents. The unrestricted communication performed best and boosted the cooperation levels more than when the amount of information to be exchanged was limited.
 
 All of the studies mentioned above were carried out using human subjects as game participants; the group sizes were also kept relatively small with few rounds.
-This made the results difficult to analyze and almost impossible to draw strong conclusions from noisy the data.
+This made the results difficult to analyze and almost impossible to draw strong conclusions from.
 These studies also used external infrastructure for information passing: eliminating noise, delays, and deliberately wrong information.
 As shown by \citet{noise}, not all strategies that perform well in noiseless environments can do so under the presence of noise.
 Using external infrastructure for passing information also meant that
@@ -582,48 +582,26 @@ Let's all be excellent.
 
 
 \section{Conclusion}
-% ideally, this section can stand on its own: it should be readable without having read the earlier sections.
-In this paper, we wanted to investigate the efficacy of gossip in disseminating local reputation, promoting and sustaining cooperation in a population of rational selfish agents acting independently.
+In this paper, we wanted to provide a definitive evaluating of the efficacy of local reputation---built up via gossip---in promoting and sustaining cooperation in selfish populations.
+The inspiration came from many different papers taking various approaches to investigate effects of communication and reputation on cooperation in iterated exchange games.
+All of these are described in more detail in the related work section at the beginning of the paper.
+The prior research has used human subjects in relatively small groups with few rounds of the game, the results achieved were difficult to analyze and to draw strong conclusions from.
+To address this we build a computer simulation for evaluating communication in spatial multi-agent environments; general enough to serve as a solid foundation for further research.
+We verify it by building a simulation to evaluate effects of local reputation on the cooperation levels.
 
-Cooperation is the single best advantage humans have over other species;
-it is shown over and over again that cooperating individuals can achieve extraordinary results and reap astronomical rewards.
-Yet, the conditions necessary and sufficient for cooperation to emerge and sustain itself are not well known or understood.
-We find it important to investigate what makes cooperation the preferred strategy and how to promote it in diverse populations.
-
-We have built a computer simulation of a multi-agent spatial environment.
-The main agent interaction was modelled using a Prisoner's Dilemma exchange game. This is a well understood game with lots of game theory research shedding light on its various interactions.
-We have based our model on the work of \citet{smaldino}, with a couple of changes to better fit our goal.
-Namely, we have decreased the grid size to keep the simulation times reasonably low.
-This has led us to change the PD game reward $S$ (sucker's payoff) to compensate for the smaller amount of agents in the new model.
-
-We have expanded the model with memory; each agent can remember a fixed number of past defectors and choose to abstain from playing games with them, thus protecting itself against being exploited repeatedly.
-We found that adding memory to the model made cooperators fully saturate the population quickly, but the defectors would catch up shortly afterwards.
-Increasing memory size beyond one brought only marginal benefits in increasing the saturation speed.
-
-Next, we have allowed the agents to communicate. Before playing a game with a nearby opponent, an agent can ask all agents in a range if they remember the opponent as a defector. If they do, the agent will abstain from playing the game with the opponent.
-Thus a single defection can be punished by being effectively barred from all future interactions with other agents.
-This ostracization quickly leads to death, since agents are not able to survive without a steady stream of rewards from the PD game.
-By allowing agents to gossip openly, cooperators were able to avoid exploitation. Defectors die out quickly.
-The amount of gossip information was not an important factor, again only bringing a negligible increase in the saturation speed.
-
-The most important factor in predicting cooperator success is the range at which the gossip can be exchanged.
+% final results
+From the simulation, we find that the most important factor in predicting cooperator success is the range at which gossip can be exchanged; the amount of information included in the gossip has negligible effect.
 If the gossip can move faster than agents, cooperators will flourish.  Otherwise defectors can reach full population saturation.
 From what we find, the best way to ensure cooperation (and survival of a population) is to keep your enemies close and be loud about it.
 The louder the better.
 
-Our model and simulation setup was limited in representing real world conditions.
-We assume all information is transferred with 100\% fidelity: no noise is present, no information is lost, all agents share information willingly and openly with anyone without any limitations. Introduction of noise to this model could alter the results and show other interesting aspects of cooperation.
-
-Next, the size of spatial environment was kept very small because of constrained computation resources. Expanding the grid size would allow for more complex interactions and long-memory effects between the agents.
-It would be interesting to investigate if expanding the grid size alters the results in any meaningful way.
-
-The population of agents we have used was composed of pure cooperators and pure defectors.
-And all agents were sharing information openly with anyone.
-More complex strategies could be defined and perhaps an optimal strategy for behaviour/information sharing could be found.
-
-Agents could be given probabilistic behaviour. Making the classification into cooperator/defector more complex. This would work against the gossip mechanism we used.
-It could be possible that the gossip mechanism would not be advantageous if the agent behaviour was random enough.
-Perhaps even favoring the defectors as the gossip mechanism would deter more cooperator--cooperator interactions.
+% future work
+Our simulation setup was limited in representing real world conditions.
+We assumed all information is transferred with 100\% fidelity: no noise is present, no information is lost, all agents share information willingly and openly with anyone without any limitations. Introduction of noise to this model could alter the results and show other interesting aspects of cooperation.
+Next, the population of agents we used was composed of only pure cooperators and pure defectors, and all agents were sharing information openly with all nearby agents.
+More complex strategies could be defined and perhaps an optimal combined strategy for behaviour--information sharing could be identified.
+Agents could be given probabilistic behaviour making the classification into cooperator/defector more complex. This would work against the gossip mechanism we used.
+It could be that the gossip mechanism would not be advantageous if the agent behaviour was random enough, perhaps even favoring the defectors as the gossip mechanism would deter more cooperator--cooperator interactions.
 
 
 
