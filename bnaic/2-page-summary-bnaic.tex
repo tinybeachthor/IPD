@@ -27,24 +27,25 @@
 
 % references
 \usepackage[numbers,sort]{natbib}
-\bibliographystyle{splncs04}
+
 % quotation
 \usepackage{dirtytalk}
+
 
 \begin{document}
 
 %
-\title{
-Spatial Prisoner’s Dilemma: \\
-Keep your enemies closer and be loud about it}
+\title{Localised Reputation in the Prisoner's Dilemma}
+%Spatial Prisoner’s Dilemma: \\
+%Keep your enemies closer and be loud about it}
 %
 %\titlerunning{Abbreviated paper title}
 % If the paper title is too long for the running head, you can set
 % an abbreviated paper title here
 %
 \author{
-Martin Toman\inst{1} \and
-Neil Yorke-Smith\inst{1}\orcidID{0000-0002-1814-3515}
+Martin Toman \and
+Neil Yorke-Smith\orcidID{0000-0002-1814-3515}\\\email{n.yorke-smith@tudelft.nl}
 }
 %
 \authorrunning{M. Toman, N. Yorke-Smith}
@@ -58,30 +59,39 @@ Neil Yorke-Smith\inst{1}\orcidID{0000-0002-1814-3515}
 %
 %
 \begin{abstract}
-Under what conditions can cooperation emerge and how can we sustain it?
-We build a computer simulation of a multi-agent spatial environment using Prisoner's Dilemma as the principal agent interaction.
-We expand the model by allowing agents to remember defectors, abstain from interacting with them, and warn nearby agents---local reputation of each agent is created.
-We find that local reputation works excellent in sustaining cooperation and punishing defection.
-The size of agent memory and amount of gossip are not important factors,
-only the range of gossip has to be greater than the agent movement speed.
-
-\keywords{Prisoner’s Dilemma \and Local Reputation}
+Under what conditions can cooperation emerge and be sustained?
+Previous studies abstract cooperation and defection using the spatial Prisoner's Dilemma (PD) game.
+%We build a computer simulation of a multi-agent spatial environment using Prisoner's Dilemma as the principal agent interaction.
+We study a local reputation mechanism in which agents can remember defectors, abstain from interacting with them, and warn nearby agents.
+%---local reputation of each agent is created.
+Simulations find that local reputation is effective in sustaining cooperation and punishing defection.
+Further, we find that the size of agent memory and amount of gossip are not significant factors, provided the locality range of gossip is greater than the agent movement speed.
+%
+%\keywords{First keyword  \and Second keyword \and Another keyword.}
 \end{abstract}
-%
-%
-%
-\section{Related Work \& Motivation}
-Reputation systems strongly boost cooperation in spatial exchange games \cite{simple-reputation, dong-reputation}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Motivation and Experimental Design}
+%\section{Related Work \& Motivation}
+
+Reputation systems strongly boost cooperation in spatial exchange games such as spatial PD \cite{simple-reputation, dong-reputation}.
 Similarly, allowing game participants to pass information, either directly \cite{cooperation-communication} or indirectly \cite{public-private-monitoring}, increases the rate of cooperation.
 
-We aim to explore the limits of local reputation---built up via gossip---in promoting and sustaining cooperation in Spatial Prisoner’s Dilemma and under what parameters does it yield optimal results.
+We aim to explore the limits of local reputation---built up via gossip---in promoting and sustaining cooperation.
+% in Spatial Prisoner’s Dilemma and under what parameters does it yield optimal results.
 %
 %
 %
-\section{Methodology}
-We build a computer simulation \cite{smaldino} in Python using the Mesa\footnote{\url{https://github.com/projectmesa/mesa}} framework; the complete source is available online (\url{https://github.com/tinybeachthor/IPD}).
+%\section{Methodology}
+%We build a computer simulation \cite{smaldino} in Python using the Mesa\footnote{\url{https://github.com/projectmesa/mesa}} framework; the complete source is available online (\url{https://github.com/tinybeachthor/IPD}).
+%
+Agent's behaviour is defined by the finite state diagram shown in Figure~\ref{fig:agent_behaviour}.
+We expand over prior work \cite{smaldino} %the model
+by giving agents a (limited size) memory to keep track of defectors and to allow them to share this information by gossiping with other agents in a certain range.
 
-\begin{figure}[h]
+\begin{figure}[tb]
   \centering
   \begin{tikzpicture}
 
@@ -111,19 +121,17 @@ We build a computer simulation \cite{smaldino} in Python using the Mesa\footnote
   \label{fig:agent_behaviour}
 \end{figure}
 
-Agent's behaviour is defined by the finite state diagram shown in Figure~\ref{fig:agent_behaviour}.
-We expand the model by giving agents a (limited size) memory to keep track of defectors and to allow them to share this information by gossiping with other agents in a certain range.
 
-When running the simulation, we observe the saturation of cooperator and defector populations; we also record characteristic patterns \cite{spatial-patterns} formed by the populations as influenced by different parameters.
-These patterns are very similar to patterns occurring in nature, which are often created by reaction--diffusion processes.
+%When running the simulation, we observe the saturation of cooperator and defector populations; we also record characteristic patterns \cite{spatial-patterns} formed by the populations as influenced by different parameters.
+%These patterns are very similar to patterns occurring in nature, which are often created by reaction--diffusion processes.
 %
 %
-%
-\section{Results \& Discussion}
-We allow agents to remember the 5 most recent defectors and to ask nearby agents in a Moore neighborhood of radius 1, 2, and 3 if they remember an agent defecting in a certain number of past encounters---varying between $0$ and $5$ (including both bounds).
+
+\section{Results and Discussion}
+We allow agents to remember the 5 most recent defectors and to ask nearby agents in a Moore neighbourhood of radius 1, 2, and 3 if they remember an agent defecting in a certain number of past encounters---varying between $0$ and $5$ (including both bounds).
 We run the simulation for 1000 steps and plot the agent type saturations in Figure~\ref{fig:agent_sat/gossip_size_step1000}.
 
-\begin{figure}[!h]
+\begin{figure}[tb]
   \centering
   \makebox[\textwidth]{
     \includegraphics[width=\textwidth]{saturation&gossip_size-range1_1000steps_large.pdf}
@@ -134,52 +142,56 @@ We run the simulation for 1000 steps and plot the agent type saturations in Figu
   \makebox[\textwidth]{
     \includegraphics[width=\textwidth]{saturation&gossip_size-range3_1000steps_large.pdf}
   }
-  \caption{Agent type saturation for various gossip sizes after 1000 steps, gossip radii 1, 2, and 3, respectively top to bottom; SD of 30 simulation runs, outliers removed}
+  \caption{Agent type saturation for various gossip sizes after 1000 steps, gossip radii 1, 2, and 3, respectively top to bottom; std.\@ dev.\@ of 30 simulation runs, outliers removed}
   \label{fig:agent_sat/gossip_size_step1000}
 \end{figure}
 
-The introduction of gossip is a strong deterrent of defection and quickly leads to cooperator--only populations quickly.
+The introduction of gossip is a strong deterrent of defection and quickly leads to cooperator--only populations.
 The size of the memory and the size of the gossip are not significant factors, only speeding up the convergence slightly.
-The most important factor in predicting cooperator success is the range of the gossip.
+%The most important factor in predicting cooperator success is the range of the gossip.
 
-\begin{figure}[!hb]
-  \centering
-  \textbf{Baseline:} Memory size 0 - Gossip size 0 - Gossip range 0
-  \makebox[\textwidth]{
-    \includegraphics[width=\textwidth/4]{spatial-memory0+gossip0+range0.pdf}
-    \includegraphics[width=\textwidth/4]{spatial-memory0+gossip0+range0-B.pdf}
-    \includegraphics[width=\textwidth/4]{spatial-memory0+gossip0+range0-C.pdf}
-  }
-  \textbf{Final:} Memory size 1 - Gossip size 1 - Gossip range 3
-  \makebox[\textwidth]{
-    \includegraphics[width=\textwidth/4]{spatial-memory1+gossip1+range3-A.pdf}
-    \includegraphics[width=\textwidth/4]{spatial-memory1+gossip1+range3-B.pdf}
-    \includegraphics[width=\textwidth/4]{spatial-memory1+gossip1+range3-C.pdf}
-  }
-  \caption{Spatial patterns formed by agents after simulating for 500 steps, defectors shown in red, cooperators green, empty cells light-yellow}
-  \label{fig:spatial}
-\end{figure}
+%\begin{figure}[!hb]
+%  \centering
+%  \textbf{Baseline:} Memory size 0 - Gossip size 0 - Gossip range 0
+%  \makebox[\textwidth]{
+%    \includegraphics[width=\textwidth/4]{spatial-memory0+gossip0+range0.pdf}
+%    \includegraphics[width=\textwidth/4]{spatial-memory0+gossip0+range0-B.pdf}
+%    \includegraphics[width=\textwidth/4]{spatial-memory0+gossip0+range0-C.pdf}
+%  }
+%  \textbf{Final:} Memory size 1 - Gossip size 1 - Gossip range 3
+%  \makebox[\textwidth]{
+%    \includegraphics[width=\textwidth/4]{spatial-memory1+gossip1+range3-A.pdf}
+%    \includegraphics[width=\textwidth/4]{spatial-memory1+gossip1+range3-B.pdf}
+%    \includegraphics[width=\textwidth/4]{spatial-memory1+gossip1+range3-C.pdf}
+%  }
+%  \caption{Spatial patterns formed by agents after simulating for 500 steps, defectors shown in red, cooperators green, empty cells light-yellow}
+%  \label{fig:spatial}
+%\end{figure}
 
-We include images of the spatial patterns formed by the simulations in Figure~\ref{fig:spatial}.
-Since the model has an inspiration in biology this is an interesting visualization to include.
-%
-%
-%
-\section{Conclusion}
-The most important factor in predicting cooperator success is the range at which gossip can be exchanged; the amount of information included in the gossip has negligible effect.
+%We include images of the spatial patterns formed by the simulations in Figure~\ref{fig:spatial}.
+%Since the model has an inspiration in biology this is an interesting visualization to include.
+
+
+%\section{Conclusion}
+Our simulation results find that the most important factor in predicting cooperator success is the range at which gossip can be exchanged; the amount of information included in the gossip has negligible effect.
 If the gossip can move faster than agents, cooperators will flourish. Otherwise, defectors can reach full population saturation.
-The best way to ensure cooperation (and survival of a population) is to keep your enemies close and be loud about it. The louder the better.
+%The best way to ensure cooperation (and survival of a population) is to keep your enemies close and be loud about it. The louder the better.
 
 % future work
-Our simulation setup was limited in representing real world conditions.
-We assumed all information is transferred with 100\% fidelity;
+Several directions can build on our results.
+%Our simulation setup was limited in representing real world conditions.
+Notably, we assumed all information is transferred with 100\% fidelity.  However,
 not all strategies that perform well in noiseless environments can do so under the presence of noise~\cite{noise}.
 The gossip mechanism could turn out to be disadvantageous if the agent behaviour was unpredictable enough, since it would deter more cooperator--cooperator interactions.
-%
-%
-%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % ---- Bibliography ----
 %
+\renewcommand{\bibsection}{\section*{References}} % required for natbib to have "References" printed and as section*, not chapter*
+\bibliographystyle{splncs04}
 \bibliography{references}
 
 \end{document}
