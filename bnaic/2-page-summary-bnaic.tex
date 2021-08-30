@@ -9,12 +9,11 @@
 
 % state diagrams
 \usepackage{tikz}
-\usetikzlibrary{automata, positioning, arrows}
+\usetikzlibrary{automata, arrows, positioning}
 \tikzset{
   initial text={},
   ->, % makes the edges directed
-  node distance=3.0cm, % specifies the minimum distance between two nodes. Change if necessary.
-  every state/.style={rectangle, thick, text width=5em, align=center}  % sets the properties for each ’state’ node
+  every state/.style={rectangle, thick, text width=5em, align=center, scale=1}  % sets the properties for each ’state’ node
 }
 
 % tables
@@ -94,17 +93,18 @@ by giving agents a (limited size) memory to keep track of defectors and to allow
 \begin{figure}[tb]
   \centering
   \begin{tikzpicture}
+    [align=center, node distance=3cm, on grid]
 
     \node[state, initial] (find_opponent) {Find Opponent?};
 
-    \node[state, below of=find_opponent] (play) {Play PD Game};
+    \node[state, below= 1.5cm of find_opponent] (play) {Play PD Game};
     \node[state, right of=play] (reproduce) {Attempt to Reproduce};
     \node[state, right of=find_opponent] (move) {Attempt Movement};
     \node[state, right of=move] (cost) {Pay Cost of Living};
-    \node[state, below of=cost] (energy) {Energy $\le 0$?};
+    \node[state, below= 1.5cm of cost] (energy) {Energy $\le 0$?};
 
     \node[state, accepting, right of=energy] (die) {Die};
-    \node[state, accepting, above of=die] (end) {End Turn};
+    \node[state, accepting, above= 1.5cm of die] (end) {End Turn};
 
     \draw
       (find_opponent) edge[left] node{Yes} (play)
